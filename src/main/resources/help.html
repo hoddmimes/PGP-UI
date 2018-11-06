@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GPGUI V1.0</title>
+</head>
+<body>
+<h1>About GPGUI</h1>
+GPGUI is a program wrapping the most fundamental PGP functionality provided via the 
+<a href="https://www.bouncycastle.org/about.html"> Bouncy Castle</a> API in a GUI.
+Functionality such as create/list/delete/import key, encrypt/decrypt
+message and file is exposed by the program.
+<p>
+The program tries to access and used the key ring files defined by <a href="https://www.gnupg.org">GnuPG</a>. Having GnuPG installed 
+is however optional. GPGUI i.e this program is maintaining its own public and secret key ring files so GPGUI can operate on its own if not having GnuPG installed.
+<p>
+<h2>List Keys</h2>
+Lists either public or secret keys in GnuPG and/or in GPGUI key ring files.
+The <i>Key Ring</i> attribute tells what key ring file the key belongs to i.e. GnuPG or GPGUI.
+<p>
+By double clicking on a key you will be expand, delete or delete  the key.
+ 
+<h2>Create Keys</h2>
+Dialog for creating and asymmetric key inclusive an encryption subkey. The algorithms available are RSA or DSA/ELGAM.
+The key can be save in GnuPG key ring files if being installed or in the GPGUI own key ring files.
+
+<h2>Import Key</h2>
+Armored key can be imported to the GnuPG key ring files if being installed or in the GPGUI own key ring files.
+
+<h2>Encrypt Message/File</h2>
+Encrypts a text or a file choosing a receiver public key and an encryption algorithm.
+Encrypt algorithm can be selected, AES 256 bits are default.
+
+<h2>Decrypt Message/File</h2>
+Encrypts an armored text or a file. Trying to find the secret key for decryption in GnuPG or GPGUI key ring files.
+
+<h2>Setting</h2>
+The setting dialog allows the locations of the GnuPG and GPGUI key ring files to be configured.
+In addition it is possible for how long time secret key password should be cached.
+
+</body>
+</html>
