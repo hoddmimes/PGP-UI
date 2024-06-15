@@ -32,7 +32,7 @@ public class KeyTableModel extends AbstractTableModel
 	private final int COL_KEY_RING = 5;
 	
 	
-	private  ColumnData mColumnData[] = null;
+	private ColumnData[] mColumnData = null;
 	
 	
 	ArrayList<KeyRingInterface>	mActiveUserKeyRings;
@@ -140,7 +140,7 @@ public class KeyTableModel extends AbstractTableModel
 		switch( tColumnIndex ) 
 		{
 			case COL_SELECTED:
-				return new Boolean(tUserKeyRing.isSelected());
+				return tUserKeyRing.isSelected();
 			case COL_USER_ID:
 				return tUserKeyRing.getFirstUserId();
 			case COL_KEY_ID:

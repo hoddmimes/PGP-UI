@@ -100,11 +100,7 @@ public class PGPGUI implements ActionListener {
 	private static boolean isWindows() 
 	{
 		String OS = System.getProperty("os.name").toLowerCase();
-		if (OS.indexOf("win") >= 0) {
-		  return true;
-		} else {
-		  return false;
-		}
+        return OS.contains("win");
 	}
 	
 	
@@ -137,36 +133,36 @@ public class PGPGUI implements ActionListener {
 		// Add Crypto options 
 		JMenu tCryptoMenu = new JMenu("Crypto");
 		tCryptoMenu.setFont(mMenuBoldFont);
-		creatmenuItem(tCryptoMenu, "Encrypt Message", MENU_CMD_ENCRYPT_MSG);
-		creatmenuItem(tCryptoMenu, "Decrypt Message", MENU_CMD_DECRYPT_MSG);
-		creatmenuItem(tCryptoMenu, "Encrypt File", MENU_CMD_ENCRYPT_FILE);
-		creatmenuItem(tCryptoMenu, "Decrypt File", MENU_CMD_DECRYPT_FILE);
-		creatmenuItem(tCryptoMenu, "Settings", MENU_CMD_SETTINGS);
-		creatmenuItem(tCryptoMenu, "Exit", MENU_CMD_EXIT);		
+		createMenuItem(tCryptoMenu, "Encrypt Message", MENU_CMD_ENCRYPT_MSG);
+		createMenuItem(tCryptoMenu, "Decrypt Message", MENU_CMD_DECRYPT_MSG);
+		createMenuItem(tCryptoMenu, "Encrypt File", MENU_CMD_ENCRYPT_FILE);
+		createMenuItem(tCryptoMenu, "Decrypt File", MENU_CMD_DECRYPT_FILE);
+		createMenuItem(tCryptoMenu, "Settings", MENU_CMD_SETTINGS);
+		createMenuItem(tCryptoMenu, "Exit", MENU_CMD_EXIT);
 		tMenuBar.add( tCryptoMenu );
 		
 		
 		
 		JMenu tKeyMenu = new JMenu("Keys");
 		tKeyMenu.setFont(mMenuBoldFont);
-		creatmenuItem(tKeyMenu, "List Public Keys", MENU_CMD_LIST_PUBLIC_KEYS);
-		creatmenuItem(tKeyMenu, "List Secret Keys", MENU_CMD_LIST_SECRET_KEYS);
-		creatmenuItem(tKeyMenu, "Import Key", MENU_CMD_IMPORT_KEY);
-		creatmenuItem(tKeyMenu, "Create Key", MENU_CMD_CREATE_KEY);
+		createMenuItem(tKeyMenu, "List Public Keys", MENU_CMD_LIST_PUBLIC_KEYS);
+		createMenuItem(tKeyMenu, "List Secret Keys", MENU_CMD_LIST_SECRET_KEYS);
+		createMenuItem(tKeyMenu, "Import Key", MENU_CMD_IMPORT_KEY);
+		createMenuItem(tKeyMenu, "Create Key", MENU_CMD_CREATE_KEY);
 		tMenuBar.add( tKeyMenu );
 		
 		
 		
 		JMenu tHelpMenu = new JMenu("Help");
 		tHelpMenu.setFont(mMenuBoldFont);
-		//creatmenuItem(tHelpMenu, "About", MENU_CMD_HELP_ABOUT);
-		creatmenuItem(tHelpMenu, "Contents", MENU_CMD_HELP_CONTENTS);
+		//createMenuItem(tHelpMenu, "About", MENU_CMD_HELP_ABOUT);
+		createMenuItem(tHelpMenu, "Contents", MENU_CMD_HELP_CONTENTS);
 		tMenuBar.add( tHelpMenu );
 			
 		mFrame.getContentPane().add(tMenuBar, BorderLayout.NORTH);
 	}
 	
-	private JMenuItem creatmenuItem(JMenu pMenu, String pLabel, String pCommand) {
+	private JMenuItem createMenuItem(JMenu pMenu, String pLabel, String pCommand) {
 		JMenuItem tMenuItem = new JMenuItem(pLabel);
 		tMenuItem.setFont(mMenuFont);
 		tMenuItem.addActionListener(this);
