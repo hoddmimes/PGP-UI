@@ -143,7 +143,7 @@ public class KeyTableModel extends AbstractTableModel
 			case COL_KEY_ID:
 				return Integer.toHexString((int)(tUserKeyRing.getMasterKeyId() &0xffffffff));
 			case COL_KEY_SIZE:
-				return toString().valueOf(tUserKeyRing.getBitStrength());
+                return String.valueOf(tUserKeyRing.getBitStrength());
 			case COL_KEY_RING:
 				return tUserKeyRing.getKeyRingRepositoryName();
 			case COL_KEY_ALGO:
