@@ -74,16 +74,16 @@ public class GPGAdapter
 	
 	public interface GetPasswordInterface 
 	{
-		public char[] getPasswordForDecrypt( long pKeyId, String puserId );
-		public Component getComponent();
+		char[] getPasswordForDecrypt(long pKeyId, String puserId);
+		Component getComponent();
 	}
 	
 	public interface DecryptInterface 
 	{
-		public void 	decryptedMessage( byte[] pMessageBytes);
-		public char[]   getPasswordForDecrypt( long pKeyId, String pUserId);
-		public void 	encryptSignOnePassUsers( String pUserList);
-		public void 	encryptSignUsers( String pUserList);
+		void 	decryptedMessage(byte[] pMessageBytes);
+		char[]   getPasswordForDecrypt(long pKeyId, String pUserId);
+		void 	encryptSignOnePassUsers(String pUserList);
+		void 	encryptSignUsers(String pUserList);
 	}
 
 	static void setAppIcon( Object pSourceObject, java.awt.Window pWindow) {

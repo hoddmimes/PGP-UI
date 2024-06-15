@@ -5,6 +5,6 @@ import org.bouncycastle.openpgp.PGPPublicKeyRing;
 
 public interface PubKeyRingInterface extends KeyRingInterface 
 {
-	public PGPPublicKey getPublicEncryptionKey();
-	public PGPPublicKeyRing getPublicKeyRing();
+	PGPPublicKey getPublicEncryptionKey();
+	PGPPublicKeyRing getPublicKeyRing();
 }

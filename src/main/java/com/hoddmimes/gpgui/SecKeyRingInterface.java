@@ -7,13 +7,13 @@ import org.bouncycastle.openpgp.PGPSecretKeyRing;
 
 public interface SecKeyRingInterface extends KeyRingInterface {
 
-	public boolean isSecretKeyInRing( long pKeyId );
+	boolean isSecretKeyInRing(long pKeyId);
 	
-	public PGPSecretKey getSecretKey( long pKeyId );
+	PGPSecretKey getSecretKey(long pKeyId);
 	
-	public String getSecretKeyUserId();
+	String getSecretKeyUserId();
 	
-	public PGPSecretKeyRing getSecretKeyRing();
+	PGPSecretKeyRing getSecretKeyRing();
 	
 	
 }
