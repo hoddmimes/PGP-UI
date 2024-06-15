@@ -1,4 +1,4 @@
-# PGP-UI
+# PGP-GUI
 
 GUI wrapping the PGP function provided by Legion of the Bouncy Castle
 
