@@ -247,7 +247,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 		  int tLen = tInStream.read( tBuffer, 0, tBuffer.length);
 		  tInStream.close();
 		  String tString = new String( tBuffer, 0, tLen );
-		  if (tString.indexOf("BEGIN PGP MESSAGE") >= 0) {
+		  if (tString.contains("BEGIN PGP MESSAGE")) {
 			  return true;
 		  } else {
 			  return false;

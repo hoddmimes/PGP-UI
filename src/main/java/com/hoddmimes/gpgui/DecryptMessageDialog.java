@@ -120,7 +120,7 @@ public class DecryptMessageDialog extends JDialog implements DecryptInterface {
 
 	private void decryptMessage() {
 		String tMessage = null;
-		if (mText.getText().indexOf("BEGIN PGP MESSAGE") < 0) {
+		if (!mText.getText().contains("BEGIN PGP MESSAGE")) {
 			AlertMessage.showMessage(this, "Does not seams to be a valid PGP encrypted message");
 			return;
 		}
