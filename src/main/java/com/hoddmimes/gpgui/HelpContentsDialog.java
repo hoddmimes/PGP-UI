@@ -117,9 +117,6 @@ public class HelpContentsDialog extends JDialog {
 				}
 
 				File tFile = new File("./resources/helpext.html");
-				if (!tFile.exists()) {
-					tFile = new File("./gpgui/resources/helpext.html");
-				}
 				if (tFile.exists()) {
 					pPane.setText(fileToString(tFile));
 					return;
@@ -138,9 +135,6 @@ public class HelpContentsDialog extends JDialog {
 				}
 
 				File tFile = new File("./resources/help.html");
-				if (!tFile.exists()) {
-					tFile = new File("./gpgui/resources/help.html");
-				}
 				if (tFile.exists()) {
 					pPane.setText(fileToString(tFile));
 					return;

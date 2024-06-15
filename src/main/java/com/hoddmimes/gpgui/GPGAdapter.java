@@ -95,9 +95,6 @@ public class GPGAdapter
 				pWindow.setIconImage(ImageIO.read( tURL));
 			} else {
 				File tFile = new File("./resources/lock32.png");
-				if (!tFile.exists()) {
-					tFile = new File("./gpgui/resources/lock32.png");
-				}
 				pWindow.setIconImage(ImageIO.read( tFile ));
 			}
 		}
