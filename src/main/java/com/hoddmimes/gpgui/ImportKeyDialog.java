@@ -157,7 +157,7 @@ public class ImportKeyDialog extends JDialog {
 			resetImport();
 		}
 		catch( Exception e) {
-			String tPrefixString = (mPGPKeyObject instanceof PGPPublicKeyRing) ? new String("failed to save public key; ") : new String("failed to save secret key; ");
+			String tPrefixString = (mPGPKeyObject instanceof PGPPublicKeyRing) ? "failed to save public key; " : "failed to save secret key; ";
 			AlertMessage.showMessage(this, tPrefixString + e.getMessage());
 			resetImport();
 		}

@@ -212,7 +212,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 			mInFilenameTextFile.setText(tSelectedFile.getAbsolutePath());
 			Settings.getInstance().setCurrentDir(tSelectedFile.getParent());
 			if (mOutFilenameTextFile.getText().isEmpty()) {
-				String tName = new String(tSelectedFile.getAbsolutePath());
+				String tName = tSelectedFile.getAbsolutePath();
 				if (tName.endsWith(".asc")) {
 					tName = tName.substring(0, tName.length() - ".asc".length());
 				}
@@ -240,18 +240,14 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 	
 	private boolean isArmoredFile( File pInFile ) {
 		InputStream tInStream = null;
-		
+
 		try {
 		  byte[] tBuffer = new byte[ 2048 ];
 		  tInStream = Files.newInputStream(pInFile.toPath());
 		  int tLen = tInStream.read( tBuffer, 0, tBuffer.length);
 		  tInStream.close();
 		  String tString = new String( tBuffer, 0, tLen );
-		  if (tString.contains("BEGIN PGP MESSAGE")) {
-			  return true;
-		  } else {
-			  return false;
-		  }
+          return tString.contains("BEGIN PGP MESSAGE");
 		}
 		catch( Exception e) {
 			if (tInStream != null) {

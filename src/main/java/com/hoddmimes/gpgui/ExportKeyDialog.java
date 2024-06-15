@@ -113,7 +113,7 @@ public class ExportKeyDialog extends JDialog {
 
 		tArmoredOutputStream.flush();
 		tArmoredOutputStream.close();
-	    String tString = new String( tByteArrayOutStream.toByteArray());
+	    String tString = tByteArrayOutStream.toString();
 	    mTextArea.setText(tString);
 	
 	}

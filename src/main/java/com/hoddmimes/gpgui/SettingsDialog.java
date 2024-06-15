@@ -291,7 +291,7 @@ public class SettingsDialog extends JDialog {
 			tFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			if (!mParameter.getText().isEmpty()) {
 				int tIdx = mParameter.getText().lastIndexOf(File.separatorChar);
-				String tDir = (tIdx >= 0) ? mParameter.getText().substring(0, tIdx) : new String("./");
+				String tDir = (tIdx >= 0) ? mParameter.getText().substring(0, tIdx) : "./";
 				tFileChooser.setCurrentDirectory(new File(tDir));
 			} else {
 				tFileChooser.setCurrentDirectory(new File("./"));
