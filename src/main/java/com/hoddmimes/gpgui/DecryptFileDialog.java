@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.List;
 
@@ -242,7 +243,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 		
 		try {
 		  byte[] tBuffer = new byte[ 2048 ];
-		  tInStream = new FileInputStream(pInFile);
+		  tInStream = Files.newInputStream(pInFile.toPath());
 		  int tLen = tInStream.read( tBuffer, 0, tBuffer.length);
 		  tInStream.close();
 		  String tString = new String( tBuffer, 0, tLen );

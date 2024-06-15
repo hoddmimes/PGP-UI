@@ -105,7 +105,7 @@ public class KeyTableModel extends AbstractTableModel
 	@Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		if (mEnableUserSeletions) {
-			if (((Boolean) aValue) == true) {
+			if (((Boolean) aValue)) {
 				for(int i = 0; i < mActiveUserKeyRings.size(); i++) {
 					super.setValueAt(false, i, columnIndex); 
 					mActiveUserKeyRings.get(i).setIsSelected(false);

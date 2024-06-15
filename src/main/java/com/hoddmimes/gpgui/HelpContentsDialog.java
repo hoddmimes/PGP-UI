@@ -7,6 +7,8 @@ import java.awt.Insets;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Scanner;
 
 
@@ -91,7 +93,7 @@ public class HelpContentsDialog extends JDialog {
 	}
 
 	private String fileToString( File pFile ) throws IOException {
-		String tString = new Scanner(new FileInputStream(pFile), "utf-8").useDelimiter("\\Z").next();
+		String tString = new Scanner(Files.newInputStream(pFile.toPath()), StandardCharsets.UTF_8).useDelimiter("\\Z").next();
 		return tString;
 	}
 

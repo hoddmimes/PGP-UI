@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.security.Security;
 import java.text.SimpleDateFormat;
@@ -161,7 +163,7 @@ public class GPGAdapter
 		}
 
 		try {
-			tSecretKeyRingCollection = new PGPSecretKeyRingCollection(PGPUtil.getDecoderStream(new FileInputStream(pKeyRingFilename)), new JcaKeyFingerprintCalculator());
+			tSecretKeyRingCollection = new PGPSecretKeyRingCollection(PGPUtil.getDecoderStream(Files.newInputStream(Paths.get(pKeyRingFilename))), new JcaKeyFingerprintCalculator());
 		}
 		catch( Exception e) {
 			throw new IOException("Failed to open\"" + pKeyRingFilename + "\" key ring.");
@@ -187,7 +189,7 @@ public class GPGAdapter
 	   	}
 
 		try {
-			tPublicKeyRingCollection = new PGPPublicKeyRingCollection(PGPUtil.getDecoderStream(new FileInputStream(pKeyRingFilename)), new JcaKeyFingerprintCalculator());
+			tPublicKeyRingCollection = new PGPPublicKeyRingCollection(PGPUtil.getDecoderStream(Files.newInputStream(Paths.get(pKeyRingFilename))), new JcaKeyFingerprintCalculator());
 	   	}
 		catch( Exception e) {
 			throw new IOException("Failed to open\"" + pKeyRingFilename + "\" key ring.");
@@ -368,7 +370,7 @@ public class GPGAdapter
 		 
 		 File tTmpFile = File.createTempFile("pgpui", null);
 		 tTmpFile.deleteOnExit();
-		 OutputStream tTmpOutputStream = new FileOutputStream(tTmpFile);
+		 OutputStream tTmpOutputStream = Files.newOutputStream(tTmpFile.toPath());
 		 
 
 		 
@@ -389,10 +391,10 @@ public class GPGAdapter
 		 
 		 
 		// Init encrypted data generator
-		 OutputStream tFileOutputStream = new FileOutputStream(pOutFile);
+		 OutputStream tFileOutputStream = Files.newOutputStream(pOutFile.toPath());
 		 OutputStream tOutStream = (pArmoredFlag) ? new ArmoredOutputStream(tFileOutputStream) : tFileOutputStream;
 		 
-		 InputStream tTmpInputStream = new FileInputStream( tTmpFile );
+		 InputStream tTmpInputStream = Files.newInputStream(tTmpFile.toPath());
 		 
 		 
 		 PGPDataEncryptorBuilder tEncBuilder = new BcPGPDataEncryptorBuilder(getEncryptionAlgorithm( pEncryptAlgo, pAESStrength)).setWithIntegrityPacket(true);
@@ -546,7 +548,7 @@ public class GPGAdapter
 					Iterator<String> tUserItr = pk.getUserIDs();
 					while( tUserItr.hasNext()) {
 						if (!tFirst) {
-							sb.append( ", " + tUserItr.next());
+							sb.append(", ").append(tUserItr.next());
 						} else {
 							sb.append(tUserItr.next());
 							tFirst = false;
@@ -577,7 +579,7 @@ public class GPGAdapter
 					Iterator<String> tUserItr = pk.getUserIDs();
 					while( tUserItr.hasNext()) {
 						if (!tFirst) {
-							sb.append( ", " + tUserItr.next());
+							sb.append(", ").append(tUserItr.next());
 						} else {
 							sb.append(tUserItr.next());
 							tFirst = false;
@@ -603,7 +605,7 @@ public class GPGAdapter
 
 		try {
 			try {
-				tInStream = PGPUtil.getDecoderStream(new FileInputStream(pInFile));
+				tInStream = PGPUtil.getDecoderStream(Files.newInputStream(pInFile.toPath()));
 			} catch (IOException e) {
 				throw new IOException("failed to decode encrypted stream (" + e.getMessage() + ")");
 			}
@@ -654,7 +656,7 @@ public class GPGAdapter
 					//System.out.println("Orginal File: " + tLitteralData.getFileName() + " ModTime: "
 					//		+ cSDF.format(tLitteralData.getModificationTime()));
 
-					tOutStream = new FileOutputStream( pOutFile );
+					tOutStream = Files.newOutputStream(pOutFile.toPath());
 					InputStream tInputStream = tLitteralData.getInputStream();
 					byte[] tBuffer = new byte[1024];
 					while ((tBytesRead = tInputStream.read(tBuffer, 0, tBuffer.length)) != -1) {
