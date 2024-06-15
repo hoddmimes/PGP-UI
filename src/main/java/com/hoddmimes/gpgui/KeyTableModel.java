@@ -96,11 +96,8 @@ public class KeyTableModel extends AbstractTableModel
 	@Override
 	public boolean isCellEditable(int pRowIndex, int pColumnIndex) {
 		int tColumnIndex = (mEnableUserSelections) ? pColumnIndex : (pColumnIndex + 1);
-		if (tColumnIndex == 0) {
-			return true;
-		}
-		return false;
-	}
+        return tColumnIndex == 0;
+    }
 
 	@Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {

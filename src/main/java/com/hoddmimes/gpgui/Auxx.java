@@ -284,11 +284,8 @@ public class Auxx
 	
 	public static boolean ifKeyRingFileExists( String pFilename ) {
 		File tFile = new File(pFilename);
-		if (tFile.exists() && tFile.canRead()) {
-			return true;
-		}
-		return false;
-	}
+        return tFile.exists() && tFile.canRead();
+    }
 }
 
 

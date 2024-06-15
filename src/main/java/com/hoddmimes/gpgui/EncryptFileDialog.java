@@ -441,11 +441,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		if (e.getType() == e.UPDATE) {
-			if (mKeyContainer.anyUserSelected()) {
-				mEncryptBtn.setEnabled(true);
-			} else {
-				mEncryptBtn.setEnabled(false);
-			}
+            mEncryptBtn.setEnabled(mKeyContainer.anyUserSelected());
 		}
 	}
 
@@ -530,11 +526,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == mEncryptAlgoComboBox) {
 			String tAlgo = (String) mEncryptAlgoComboBox.getSelectedItem();
-			if (tAlgo.compareTo("AES") != 0) {
-				mAESStrengthComboBox.setEnabled(false);
-			} else {
-				mAESStrengthComboBox.setEnabled(true);
-			}
+            mAESStrengthComboBox.setEnabled("AES".equals(tAlgo));
 		}
 		
 	}
