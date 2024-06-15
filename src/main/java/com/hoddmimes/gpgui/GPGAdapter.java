@@ -472,10 +472,8 @@ public class GPGAdapter
 		// the first object might be a PGP marker packet.
 		 tEncDataList = (tPGPObject instanceof  PGPEncryptedDataList) ? (PGPEncryptedDataList) tPGPObject : (PGPEncryptedDataList) tPGPObjectFactory.nextObject();
 		 
-		 @SuppressWarnings("unchecked")
-		Iterator<PGPPublicKeyEncryptedData> tEncDataItr = tEncDataList.iterator();
-		 while( tEncDataItr.hasNext() ) {
-			 PGPPublicKeyEncryptedData tEncData = tEncDataItr.next();
+		 for (PGPEncryptedData tEncDataEl : tEncDataList) {
+			 PGPPublicKeyEncryptedData tEncData = (PGPPublicKeyEncryptedData)tEncDataEl;
 			 tSecKeyRing = GPGAdapter.getInstance().findSecretKeyRing(tEncData.getKeyID());
 			 
 			 if (tSecKeyRing == null) {
@@ -616,10 +614,8 @@ public class GPGAdapter
 			tEncDataList = (tPGPObject instanceof PGPEncryptedDataList) ? (PGPEncryptedDataList) tPGPObject
 					: (PGPEncryptedDataList) tPGPObjectFactory.nextObject();
 
-			
-			Iterator<PGPPublicKeyEncryptedData> tEncDataItr = tEncDataList.iterator();
-			while (tEncDataItr.hasNext()) {
-				PGPPublicKeyEncryptedData tEncData = tEncDataItr.next();
+			for (PGPEncryptedData tEncDataEl : tEncDataList) {
+				PGPPublicKeyEncryptedData tEncData = (PGPPublicKeyEncryptedData)tEncDataEl;
 				tSecKeyRing = GPGAdapter.getInstance().findSecretKeyRing(tEncData.getKeyID());
 
 				if (tSecKeyRing == null) {
