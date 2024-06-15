@@ -94,9 +94,6 @@ public class GPGAdapter
 			if (tURL != null) {
 				pWindow.setIconImage(ImageIO.read( tURL));
 			} else {
-//				FileOutputStream tOut = new FileOutputStream("frotz.frotz");
-//				tOut.write(42);
-//				tOut.close();
 				File tFile = new File("./resources/lock32.png");
 				if (!tFile.exists()) {
 					tFile = new File("./gpgui/resources/lock32.png");
