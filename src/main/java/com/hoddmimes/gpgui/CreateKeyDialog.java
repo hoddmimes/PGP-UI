@@ -252,13 +252,13 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 			String regex = "^[<\\[A-Za-z0-9+_.-]+@[>\\]A-Za-z0-9+_.-]+$";
 			 
 			Pattern tPattern = Pattern.compile(regex);
-			
-			for( int i = 0;  i < tArr.length; i++) {
-				tMatcher = tPattern.matcher(tArr[i]);
-				if (tMatcher.matches()) {
-					return true;
-				}
-			}
+
+            for (String s : tArr) {
+                tMatcher = tPattern.matcher(s);
+                if (tMatcher.matches()) {
+                    return true;
+                }
+            }
 			
 			AlertMessage.showMessage(this, "Incomplete or Invalid mail address");
 			return false;
