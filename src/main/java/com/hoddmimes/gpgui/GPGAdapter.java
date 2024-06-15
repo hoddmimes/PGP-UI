@@ -169,7 +169,7 @@ public class GPGAdapter
 			throw new IOException("Failed to open\"" + pKeyRingFilename + "\" key ring.");
 		}
 
-		Iterator tKeyRingItr = tSecretKeyRingCollection.getKeyRings();
+		Iterator<PGPSecretKeyRing> tKeyRingItr = tSecretKeyRingCollection.getKeyRings();
 			
 		while (tKeyRingItr.hasNext()) {
 			tKeyRingList.add( (PGPSecretKeyRing) tKeyRingItr.next());
@@ -195,7 +195,7 @@ public class GPGAdapter
 			throw new IOException("Failed to open\"" + pKeyRingFilename + "\" key ring.");
 	   	}
 
-		Iterator tKeyRingItr = tPublicKeyRingCollection.getKeyRings();
+		Iterator<PGPPublicKeyRing> tKeyRingItr = tPublicKeyRingCollection.getKeyRings();
 	   		
 		while (tKeyRingItr.hasNext()) {
 			tKeyRingList.add( (PGPPublicKeyRing) tKeyRingItr.next());
