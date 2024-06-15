@@ -36,7 +36,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 	private final String POPUP_DELETE_KEY = "Delete Key";
 	
 	
-	private final boolean		mEnableUserSeletions;
+	private final boolean		mEnableUserSelections;
 	private final JTable 		mTable;
 	private final KeyTableModel mTableModel;
 
@@ -50,7 +50,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 
 	public KeyContainer(KeyType pKeyType, int pWidth, int pHeight, boolean pUserIdFilter, boolean pEnableUserSeletions ) {
 		this.mKeyType = pKeyType;
-		this.mEnableUserSeletions = pEnableUserSeletions;
+		this.mEnableUserSelections = pEnableUserSeletions;
 		this.mPrefViewSize = new Dimension(pWidth, pHeight);
 		this.setLayout(new BorderLayout());
 		
@@ -224,7 +224,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 //		    System.out.println("double clicked row: " + tRow + " col: " + tCol);
 //		    System.out.println( e.toString() );
 		    
-		    if ((!mEnableUserSeletions) || (tCol > 0)) {
+		    if ((!mEnableUserSelections) || (tCol > 0)) {
 		      mPopupMenu.setSelectedKeyRing( mTableModel.getKeyAtRow(tRow));
 		      mPopupMenu.show(this, e.getX(), e.getY());
 		    }

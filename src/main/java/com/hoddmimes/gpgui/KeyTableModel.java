@@ -21,7 +21,7 @@ import org.bouncycastle.openpgp.PGPPublicKey;
 
 
 
-public class KeyTableModel extends AbstractTableModel 
+public class KeyTableModel extends AbstractTableModel
 {
 
 	private final int COL_SELECTED = 0;
@@ -40,19 +40,19 @@ public class KeyTableModel extends AbstractTableModel
 	JTable						mTable;
 	KeyRenderer 				mKeyRenderer;
 	KeyHeaderRender 			mKeyHeaderRender;
-	boolean						mEnableUserSeletions;
+	boolean                     mEnableUserSelections;
 		
-	KeyTableModel(boolean pEnableUserSeletions) {
+	KeyTableModel(boolean pEnableUserSelections) {
 		mActiveUserKeyRings = new ArrayList<KeyRingInterface>();
 		mUserKeyRings = new ArrayList<KeyRingInterface>();
 		mKeyRenderer = new KeyRenderer();
 		mKeyHeaderRender = new KeyHeaderRender();
-		mEnableUserSeletions = pEnableUserSeletions;
+		mEnableUserSelections = pEnableUserSelections;
 		setupColumnData();
 	}
 	
 	private void setupColumnData() {
-		if (mEnableUserSeletions) {
+		if (mEnableUserSelections) {
 			mColumnData = new ColumnData[6];
 			mColumnData[0] = new ColumnData("Selected",55, JLabel.CENTER, Boolean.class);
 			mColumnData[1] = new ColumnData("User Id",350, JLabel.LEFT, String.class);
@@ -95,7 +95,7 @@ public class KeyTableModel extends AbstractTableModel
 	
 	@Override
 	public boolean isCellEditable(int pRowIndex, int pColumnIndex) {
-		int tColumnIndex = (mEnableUserSeletions) ? pColumnIndex : (pColumnIndex + 1);
+		int tColumnIndex = (mEnableUserSelections) ? pColumnIndex : (pColumnIndex + 1);
 		if (tColumnIndex == 0) {
 			return true;
 		}
@@ -104,7 +104,7 @@ public class KeyTableModel extends AbstractTableModel
 
 	@Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		if (mEnableUserSeletions) {
+		if (mEnableUserSelections) {
 			if (((Boolean) aValue)) {
 				for(int i = 0; i < mActiveUserKeyRings.size(); i++) {
 					super.setValueAt(false, i, columnIndex); 
@@ -135,7 +135,7 @@ public class KeyTableModel extends AbstractTableModel
 		}
 		KeyRingInterface tUserKeyRing = mActiveUserKeyRings.get(pRowIndex);
 		
-		int tColumnIndex = (mEnableUserSeletions) ? pColumnIndex : (pColumnIndex + 1);
+		int tColumnIndex = (mEnableUserSelections) ? pColumnIndex : (pColumnIndex + 1);
 		
 		switch( tColumnIndex ) 
 		{
