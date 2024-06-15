@@ -31,7 +31,7 @@ public class SecKeyRing implements SecKeyRingInterface {
 	@Override
 	public String getFirstUserId() {
 		if (mSecKeyRing.getSecretKey().getUserIDs().hasNext()) {
-			return (String) mSecKeyRing.getSecretKey().getUserIDs().next();
+			return mSecKeyRing.getSecretKey().getUserIDs().next();
 		} 
 		return "<not found>";
 	}
@@ -103,7 +103,7 @@ public class SecKeyRing implements SecKeyRingInterface {
 	@Override
 	public String getSecretKeyUserId() {
 		if ((mSecKeyRing.getSecretKey() != null) && (mSecKeyRing.getSecretKey().getUserIDs().hasNext())) {
-			return (String) mSecKeyRing.getSecretKey().getUserIDs().next();
+			return mSecKeyRing.getSecretKey().getUserIDs().next();
 		}
 		return "<unknown>";
 	}

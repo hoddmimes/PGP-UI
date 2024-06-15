@@ -65,7 +65,7 @@ public class SecureRandomSHA256 extends SecureRandom
 	}
 	
 	private long fugazi( int pValue ) {
-		double x = (double) pValue;
+		double x = pValue;
 		while( x > 1.0d ) {
 			x = x / 10.0d;
 		}

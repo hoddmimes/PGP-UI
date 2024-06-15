@@ -173,7 +173,7 @@ public class PGPGUI implements ActionListener {
 		Point tPoint = mFrame.getLocation();
 		Dimension tSize = mFrame.getSize();
 		
-		Point tNewPos = new Point( (int) (tPoint.x + ((double)tSize.getWidth() / 2.0)), (int) ((double) tPoint.y + (double) (tSize.getHeight() * 0.8)));
+		Point tNewPos = new Point( (int) (tPoint.x + (tSize.getWidth() / 2.0)), (int) ((double) tPoint.y + (tSize.getHeight() * 0.8)));
 		return tNewPos;
 	}
 	

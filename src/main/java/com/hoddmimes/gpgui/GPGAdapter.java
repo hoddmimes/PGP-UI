@@ -239,7 +239,7 @@ public class GPGAdapter
 	 }
 
 	private SecKeyRingInterface findSecretKeyRing(long pKeyId) throws Exception {
-		List<KeyRingInterface> tKeyRings = (List<KeyRingInterface>) this.getSecretKeyRings();
+		List<KeyRingInterface> tKeyRings = this.getSecretKeyRings();
 		for (KeyRingInterface kr : tKeyRings) {
 			SecKeyRingInterface skr = (SecKeyRingInterface) kr;
 			if (skr.isSecretKeyInRing(pKeyId)) {
@@ -307,7 +307,7 @@ public class GPGAdapter
 			 char[] tPassword = Settings.getInstance().getPasswordForKeyId(tSecSignKey.getKeyID());
 						 
 			 if (tPassword == null) {
-				 tPassword = pGetPasswordInterface.getPasswordForDecrypt(tSecSignKey.getKeyID(), (String) pSecSignKeyRing.getPublicKey().getUserIDs().next());
+				 tPassword = pGetPasswordInterface.getPasswordForDecrypt(tSecSignKey.getKeyID(), pSecSignKeyRing.getPublicKey().getUserIDs().next());
 			 }	 
 			 
 			 PGPPrivateKey pgpPrivKey = getPrivateKey(tSecSignKey, tPassword);
@@ -417,7 +417,7 @@ public class GPGAdapter
 		 if (pArmoredFlag) {
 			 tFileOutputStream.close(); 
 		 }
-		 double tSec = (double) ((double)(System.currentTimeMillis() - tStartTime) / 1000.0d);
+		 double tSec = (double)(System.currentTimeMillis() - tStartTime) / 1000.0d;
 		 
 		 tTmpInputStream.close();
 		 tTmpFile.delete();

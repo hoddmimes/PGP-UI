@@ -27,7 +27,7 @@ public class PubKeyRing implements PubKeyRingInterface {
 	@Override
 	public String getFirstUserId() {
 		if (mPubKeyRing.getPublicKey().getUserIDs().hasNext()) {
-			return (String) mPubKeyRing.getPublicKey().getUserIDs().next();
+			return mPubKeyRing.getPublicKey().getUserIDs().next();
 		} 
 		return "<not found>";
 	}
