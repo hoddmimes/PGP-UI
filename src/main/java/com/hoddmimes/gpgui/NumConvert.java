@@ -63,14 +63,14 @@ public class NumConvert
     public static long bytesToLong(byte[] pBuffer, int pOffset )
     {
         long tValue = 0;
-        tValue += (long) ((long)(pBuffer[ pOffset + 0] & 0xff) << 56);
-        tValue += (long) ((long)(pBuffer[ pOffset + 1] & 0xff) << 48);
-        tValue += (long) ((long)(pBuffer[ pOffset + 2] & 0xff) << 40);
-        tValue += (long) ((long)(pBuffer[ pOffset + 3] & 0xff) << 32);
-        tValue += (long) ((long)(pBuffer[ pOffset + 4] & 0xff) << 24);
-        tValue += (long) ((long)(pBuffer[ pOffset + 5] & 0xff) << 16);
-        tValue += (long) ((long)(pBuffer[ pOffset + 6] & 0xff) << 8);
-        tValue += (long) ((long)(pBuffer[ pOffset + 7] & 0xff) << 0);
+        tValue += (long)(pBuffer[ pOffset + 0] & 0xff) << 56;
+        tValue += (long)(pBuffer[ pOffset + 1] & 0xff) << 48;
+        tValue += (long)(pBuffer[ pOffset + 2] & 0xff) << 40;
+        tValue += (long)(pBuffer[ pOffset + 3] & 0xff) << 32;
+        tValue += (long)(pBuffer[ pOffset + 4] & 0xff) << 24;
+        tValue += (long)(pBuffer[ pOffset + 5] & 0xff) << 16;
+        tValue += (long)(pBuffer[ pOffset + 6] & 0xff) << 8;
+        tValue += (long)(pBuffer[ pOffset + 7] & 0xff) << 0;
         return tValue;
     }
     
