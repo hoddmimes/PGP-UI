@@ -260,7 +260,7 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 				}
 			}
 			
-			AlertMessage.showMessage(this, "Incomplete or Invalid mail adress");
+			AlertMessage.showMessage(this, "Incomplete or Invalid mail address");
 			return false;
 		}
 		

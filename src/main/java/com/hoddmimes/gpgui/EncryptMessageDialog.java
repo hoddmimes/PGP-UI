@@ -191,7 +191,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 			return tArr;
 		}
 		catch( Exception e ) {
-			AlertMessage.showMessage(this, "Failed to retreive secret keys: " + e.getMessage());
+			AlertMessage.showMessage(this, "Failed to retrieve secret keys: " + e.getMessage());
 			SigningUser[] tArr = new SigningUser[1];
 			tArr[0] = new SigningUser(null);
 			return tArr;

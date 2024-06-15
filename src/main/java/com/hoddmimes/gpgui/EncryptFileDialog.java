@@ -376,7 +376,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 			}
 	    	
 	    	
-			AlertMessage.showMessage(this, "Succefully encrypted \"" + mInFilenameTextFile.getText() + "\" (" + tProcessingTime + " sec)");
+			AlertMessage.showMessage(this, "Successfully encrypted \"" + mInFilenameTextFile.getText() + "\" (" + tProcessingTime + " sec)");
 			this.dispose();
 			return;
 	    }

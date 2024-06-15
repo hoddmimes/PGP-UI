@@ -321,10 +321,10 @@ public class GPGAdapter
 		 }
 		 
 		 
-		 PGPLiteralDataGenerator tLitterdataData = new PGPLiteralDataGenerator();
+		 PGPLiteralDataGenerator tLiteralData = new PGPLiteralDataGenerator();
 		
 		 
-		 OutputStream tLitteralOutputStream = tLitterdataData.open(tCompOutputStream, // the compressed output stream
+		 OutputStream tLitteralOutputStream = tLiteralData.open(tCompOutputStream, // the compressed output stream
 	                											   PGPLiteralData.BINARY, "console", // "filename" to store
 	                											   pInMessage.length, // length of clear data
 	                											   new Date()); // current time
@@ -378,7 +378,7 @@ public class GPGAdapter
 		 
 		 OutputStream tCompOutputStream = tCompressDataGen.open(tTmpOutputStream); 
 		
-		 PGPLiteralDataGenerator tLitterdataData = new PGPLiteralDataGenerator();
+		 PGPLiteralDataGenerator tLiteralData = new PGPLiteralDataGenerator();
 		 
 		 PGPUtil.writeFileToLiteralData(tCompOutputStream, // the compressed output stream
 				 					    PGPLiteralData.BINARY,
@@ -445,9 +445,9 @@ public class GPGAdapter
 		ByteArrayOutputStream tOutStream = new ByteArrayOutputStream();
 		int tBytesRead = 0;
 
-		// System.out.println("Orginal File: " +
-		// tLitteralData.getFileName() + " ModTime: " +
-		// cSDF.format(tLitteralData.getModificationTime()));
+		// System.out.println("Original File: " +
+		// tLiteralData.getFileName() + " ModTime: " +
+		// cSDF.format(tLiteralData.getModificationTime()));
 
 		InputStream tInputStream = pLiteralData.getInputStream();
 		byte[] tBuffer = new byte[1024];
@@ -651,13 +651,13 @@ public class GPGAdapter
 					tMessageObject = pgpFact.nextObject();
 				}
 				if (tMessageObject instanceof PGPLiteralData) {
-					PGPLiteralData tLitteralData = (PGPLiteralData) tMessageObject;
+					PGPLiteralData tLiteralData = (PGPLiteralData) tMessageObject;
 
-					//System.out.println("Orginal File: " + tLitteralData.getFileName() + " ModTime: "
-					//		+ cSDF.format(tLitteralData.getModificationTime()));
+					//System.out.println("Orginal File: " + tLiteralData.getFileName() + " ModTime: "
+					//		+ cSDF.format(tLiteralData.getModificationTime()));
 
 					tOutStream = Files.newOutputStream(pOutFile.toPath());
-					InputStream tInputStream = tLitteralData.getInputStream();
+					InputStream tInputStream = tLiteralData.getInputStream();
 					byte[] tBuffer = new byte[1024];
 					while ((tBytesRead = tInputStream.read(tBuffer, 0, tBuffer.length)) != -1) {
 						tOutStream.write(tBuffer, 0, tBytesRead);

@@ -61,7 +61,7 @@ public class PGPGUI implements ActionListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] pArgs) {
-			parseArgunments( pArgs );
+			parseArguments( pArgs );
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
@@ -86,7 +86,7 @@ public class PGPGUI implements ActionListener {
 		}
 	
 	
-	private static void parseArgunments( String[] pArgs )
+	private static void parseArguments(String[] pArgs )
 	{
 		int i = 0;
 		while( i  < pArgs.length ) {
