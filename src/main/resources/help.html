@@ -7,29 +7,31 @@
 <body>
 <h1>About GPGUI</h1>
 GPGUI is a program wrapping the most fundamental PGP functionality provided via the 
-<a href="https://www.bouncycastle.org/about.html"> Bouncy Castle</a> API in a GUI.
+<a href="https://www.bouncycastle.org/about/"> Bouncy Castle</a> API in a GUI.
 Functionality such as create/list/delete/import key, encrypt/decrypt
 message and file is exposed by the program.
 <p>
-The program tries to access and used the key ring files defined by <a href="https://www.gnupg.org">GnuPG</a>. Having GnuPG installed 
-is however optional. GPGUI i.e this program is maintaining its own public and secret key ring files so GPGUI can operate on its own if not having GnuPG installed.
+The program tries to access and used the key ring files defined by <a href="https://www.gnupg.org">GnuPG</a>.
+Having GnuPG installed is however optional.
+GPGUI i.e this program is maintaining its own public and secret key ring files so GPGUI can operate on its own without having GnuPG installed.
 <p>
 <h2>List Keys</h2>
 Lists either public or secret keys in GnuPG and/or in GPGUI key ring files.
 The <i>Key Ring</i> attribute tells what key ring file the key belongs to i.e. GnuPG or GPGUI.
 <p>
-By double clicking on a key you will be expand, delete or delete  the key.
+By double clicking on a key you'll see a menu to expand or delete the key.
  
 <h2>Create Keys</h2>
 Dialog for creating and asymmetric key inclusive an encryption subkey. The algorithms available are RSA or DSA/ELGAM.
-The key can be save in GnuPG key ring files if being installed or in the GPGUI own key ring files.
+The key can be saved in GnuPG key ring files if being installed or in the GPGUI own key ring files.
 
 <h2>Import Key</h2>
-Armored key can be imported to the GnuPG key ring files if being installed or in the GPGUI own key ring files.
+Armored key can be imported to the GnuPG key ring files, if being available or in the GPGUI key ring files.
 
 <h2>Encrypt Message/File</h2>
 Encrypts a text or a file choosing a receiver public key and an encryption algorithm.
-Encrypt algorithm can be selected, AES 256 bits are default.
+If selecting any of the added on algorithms (see below) i.e. SnowFlake, AESx2, AESx4 or AESx8 the message can only be
+decrypted using the GPGUI program otherwise GnuPG or PGP can be used to decrypt the message.
 
 <h2>Decrypt Message/File</h2>
 Encrypts an armored text or a file. Trying to find the secret key for decryption in GnuPG or GPGUI key ring files.
