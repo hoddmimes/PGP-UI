@@ -152,9 +152,7 @@ public class PasswordDialog extends JDialog {
 		c.anchor = GridBagConstraints.EAST;
 		tPanel.add(okButton,c);
     	getRootPane().setDefaultButton(okButton);
-				okButton.addActionListener(event-> {
-					this.setVisible(false);
-				});
+				okButton.addActionListener(event-> this.setVisible(false));
 	
 		this.getContentPane().add(tPanel);
 		this.pack();

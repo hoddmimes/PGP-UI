@@ -155,7 +155,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		c.gridx = 2;
 		c.gridy = tRow;
 		mContentPanel.add(tInBrowseBtn, c);
-		tInBrowseBtn.addActionListener(event->{ browseInFiles(); });
+		tInBrowseBtn.addActionListener(event-> browseInFiles());
 		
 		
 		
@@ -188,7 +188,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		c.gridx = 2;
 		c.gridy = tRow;
 		mContentPanel.add(tOutBrowseBtn, c);
-		tOutBrowseBtn.addActionListener(event->{ browseOutFiles(); });
+		tOutBrowseBtn.addActionListener(event-> browseOutFiles());
 		
 		
 		/**
@@ -201,7 +201,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		
 		mArmorChkBox = new JCheckBox("Armored Wrapper");
 		tParameterPanel.add(mArmorChkBox);
-		mArmorChkBox.addActionListener( event -> { updateOutFile(); });
+		mArmorChkBox.addActionListener( event -> updateOutFile());
 		
 		JPanel tPanel = new JPanel( new FlowLayout( FlowLayout.LEFT));
 		tPanel.add(mArmorChkBox);
@@ -307,14 +307,14 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 				mEncryptBtn.setActionCommand("ENCRYPT");
 				buttonPane.add(mEncryptBtn);
 				getRootPane().setDefaultButton(mEncryptBtn);
-				mEncryptBtn.addActionListener(event-> { encryptFile(); } );
+				mEncryptBtn.addActionListener(event-> encryptFile());
 				mEncryptBtn.setEnabled(false);
 			}
 			{
 				JButton tCancelButton = new JButton("Cancel");
 				tCancelButton.setActionCommand("Cancel");
 				buttonPane.add(tCancelButton);
-				tCancelButton.addActionListener( event-> { this.dispose(); });
+				tCancelButton.addActionListener( event-> this.dispose());
 			}
 		}
 	}

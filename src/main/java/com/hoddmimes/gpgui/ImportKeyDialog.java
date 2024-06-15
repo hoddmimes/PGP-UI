@@ -104,7 +104,7 @@ public class ImportKeyDialog extends JDialog {
 		
 			
 		mParseButton = new JButton("Parse");
-		mParseButton.addActionListener( event-> {parseKey();});
+		mParseButton.addActionListener( event-> parseKey());
 		tButtonPane.add(mParseButton);
 		getRootPane().setDefaultButton(mParseButton);
 
@@ -112,12 +112,12 @@ public class ImportKeyDialog extends JDialog {
 		mImportButton.setActionCommand("OK");
 		tButtonPane.add(mImportButton);
 		mImportButton.setEnabled(false);
-		mImportButton.addActionListener(event -> { addAndSaveKeyRing();}); 
+		mImportButton.addActionListener(event -> addAndSaveKeyRing());
 
 		JButton tCancelButton = new JButton("Cancel");
 		tCancelButton.setActionCommand("Cancel");
 		tButtonPane.add(tCancelButton);
-		tCancelButton.addActionListener(event->{ this.dispose();});
+		tCancelButton.addActionListener(event-> this.dispose());
 		
 		/**
 		 * Create south panel

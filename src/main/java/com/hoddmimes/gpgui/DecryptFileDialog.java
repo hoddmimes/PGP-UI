@@ -122,7 +122,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 		c.gridx = 2;
 		c.gridy = tRow;
 		mContentPanel.add(tInBrowseBtn, c);
-		tInBrowseBtn.addActionListener(event->{ browseInFiles(); });
+		tInBrowseBtn.addActionListener(event-> browseInFiles());
 		
 		
 		
@@ -154,7 +154,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 		c.gridx = 2;
 		c.gridy = tRow;
 		mContentPanel.add(tOutBrowseBtn, c);
-		tOutBrowseBtn.addActionListener(event->{ browseOutFiles(); });
+		tOutBrowseBtn.addActionListener(event-> browseOutFiles());
 		
 		/**
 		 * Add South Panel
@@ -189,13 +189,13 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 				mDecryptBtn.setActionCommand("DECRYPT");
 				tButtonPanel.add(mDecryptBtn);
 				getRootPane().setDefaultButton(mDecryptBtn);
-				mDecryptBtn.addActionListener(event-> { decryptFile(); });
+				mDecryptBtn.addActionListener(event-> decryptFile());
 			}
 			{
 				JButton tCancelBtn = new JButton("Cancel");
 				tCancelBtn.setActionCommand("Cancel");
 				tButtonPanel.add(tCancelBtn);
-				tCancelBtn.addActionListener( event -> { this.dispose(); });
+				tCancelBtn.addActionListener( event -> this.dispose());
 			}
 		}
 	}

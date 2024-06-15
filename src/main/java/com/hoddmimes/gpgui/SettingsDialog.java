@@ -100,9 +100,9 @@ public class SettingsDialog extends JDialog {
 		JPanel tButtonPanel = new JPanel( tFlowLayout );
 		
 		JButton tSaveButton = new JButton("Save");
-		tSaveButton.addActionListener(event-> { saveParameters(); });
+		tSaveButton.addActionListener(event-> saveParameters());
 		JButton tCancelButton = new JButton("Cancel");
-		tCancelButton.addActionListener(event->{this.dispose();});
+		tCancelButton.addActionListener(event-> this.dispose());
 		
 		tButtonPanel.add(tCancelButton);
 		tButtonPanel.add(tSaveButton);
@@ -233,7 +233,7 @@ public class SettingsDialog extends JDialog {
 			mButton = new JButton("...");
 			mButton.setFont(new Font( mCheckBox.getFont().getFamily(), Font.BOLD, (mCheckBox.getFont().getSize()+2)));
 			mButton.setPreferredSize(new Dimension(45, 18));
-			mButton.addActionListener(event-> { browsekeyRingFile(); } );
+			mButton.addActionListener(event-> browsekeyRingFile());
 			
 			mParameter = createTextField(pInitFilename, 32, true);
 			mParameter.addFocusListener(this);

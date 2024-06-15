@@ -62,27 +62,25 @@ public class PGPGUI implements ActionListener {
 	 */
 	public static void main(String[] pArgs) {
 			parseArguments( pArgs );
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						boolean tIsWindows = isWindows();
-						for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-							//System.out.println("UI Manager: " + info.getName());
-							if ((tIsWindows) &&("Windows".equals(info.getName()))) {
-								UIManager.setLookAndFeel(info.getClassName());
-								break;
-							} else if ((!tIsWindows) && ("Nimbus".equals(info.getName()))) {
-								UIManager.setLookAndFeel(info.getClassName());
-								break;
-							}
-						}
-						PGPGUI mgpgui = new PGPGUI();
-						mgpgui.mFrame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
+			EventQueue.invokeLater(() -> {
+                try {
+                    boolean tIsWindows = isWindows();
+                    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                        //System.out.println("UI Manager: " + info.getName());
+                        if ((tIsWindows) &&("Windows".equals(info.getName()))) {
+                            UIManager.setLookAndFeel(info.getClassName());
+                            break;
+                        } else if ((!tIsWindows) && ("Nimbus".equals(info.getName()))) {
+                            UIManager.setLookAndFeel(info.getClassName());
+                            break;
+                        }
+                    }
+                    PGPGUI mgpgui = new PGPGUI();
+                    mgpgui.mFrame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
 		}
 	
 	

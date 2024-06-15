@@ -76,7 +76,7 @@ public class ExportKeyDialog extends JDialog {
 			{
 				JButton okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
-				okButton.addActionListener(event-> {this.dispose();});
+				okButton.addActionListener(event-> this.dispose());
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}

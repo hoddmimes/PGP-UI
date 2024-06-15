@@ -140,18 +140,15 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 		addKeyParameterToPanel( tParameterPanel, "Verify Password", mPasswordTextField2, 4);
 		
 		JCheckBox tVisiblePasswordCheckBox = new JCheckBox("Visible password");
-		tVisiblePasswordCheckBox.addChangeListener( new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				if (tVisiblePasswordCheckBox.isSelected()) {
-					mPasswordTextField1.setEchoChar('\u0000');
-					mPasswordTextField2.setEchoChar('\u0000');
-				} else {
-					mPasswordTextField1.setEchoChar('*');
-					mPasswordTextField2.setEchoChar('*');
-				}
-			}
-		});
+		tVisiblePasswordCheckBox.addChangeListener(e -> {
+            if (tVisiblePasswordCheckBox.isSelected()) {
+                mPasswordTextField1.setEchoChar('\u0000');
+                mPasswordTextField2.setEchoChar('\u0000');
+            } else {
+                mPasswordTextField1.setEchoChar('*');
+                mPasswordTextField2.setEchoChar('*');
+            }
+        });
 		
 		 mGnuPgSelection = new  JRadioButton("Add Key to GnuPG");
 		 mGnuPgSelection.setToolTipText("Add key to GnuPG key ring files");
@@ -173,12 +170,12 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
-		cancelButton.addActionListener( event-> {  dispose(); } );
+		cancelButton.addActionListener( event-> dispose());
 		
 		JButton okButton = new JButton("Create Key");
 		okButton.setActionCommand("Create Key");
 		buttonPane.add(okButton);
-		okButton.addActionListener( event-> {  createKey();  } );
+		okButton.addActionListener( event-> createKey());
 		
 		getRootPane().setDefaultButton(okButton);
 			

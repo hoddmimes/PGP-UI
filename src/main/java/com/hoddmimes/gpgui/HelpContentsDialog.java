@@ -85,7 +85,7 @@ public class HelpContentsDialog extends JDialog {
 
 		JButton okButton = new JButton("OK");
 		okButton.setActionCommand("OK");
-		okButton.addActionListener(even->{ this.dispose();});
+		okButton.addActionListener(even-> this.dispose());
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 		

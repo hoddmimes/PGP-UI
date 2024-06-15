@@ -148,20 +148,20 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 			mEncryptBtn = new JButton("Encrypt");
 			mEncryptBtn.setActionCommand("ENCRYPT");
 			mEncryptBtn.setEnabled(false);
-			mEncryptBtn.addActionListener(event -> { encryptMessage();}); 
+			mEncryptBtn.addActionListener(event -> encryptMessage());
 			mButtonPanel.add(mEncryptBtn);
 		}
 		{
 			mRestoreBtn = new JButton("Restore Text");
 			mRestoreBtn.setActionCommand("RESTORE");
 			mRestoreBtn.setEnabled(false);
-			mRestoreBtn.addActionListener(event -> { restoreOrginalText();}); 
+			mRestoreBtn.addActionListener(event -> restoreOrginalText());
 			mButtonPanel.add(mRestoreBtn);
 		}
 		{
 			JButton tCancelButton = new JButton("Cancel");
 			tCancelButton.setActionCommand("Cancel");
-			tCancelButton.addActionListener( event-> { this.dispose();});
+			tCancelButton.addActionListener( event-> this.dispose());
 			mButtonPanel.add(tCancelButton);
 			getRootPane().setDefaultButton(tCancelButton);
 		}

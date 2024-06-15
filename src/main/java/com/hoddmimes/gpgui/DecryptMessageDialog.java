@@ -95,14 +95,14 @@ public class DecryptMessageDialog extends JDialog implements DecryptInterface {
 		
 		mDecryptBtn = new JButton("Decrypt");
 		mDecryptBtn.setActionCommand("DECRYPT");
-		mDecryptBtn.addActionListener( event-> { decryptMessage(); });
+		mDecryptBtn.addActionListener( event-> decryptMessage());
 		tButtonPane.add(mDecryptBtn);
 		getRootPane().setDefaultButton(mDecryptBtn);
 		
 	
 		mCancelBtn = new JButton("Cancel");
 		mCancelBtn.setActionCommand("CANCEL");
-		mCancelBtn.addActionListener(event-> {this.dispose();});
+		mCancelBtn.addActionListener(event-> this.dispose());
 		tButtonPane.add(mCancelBtn);	
 		this.pack();
 	}

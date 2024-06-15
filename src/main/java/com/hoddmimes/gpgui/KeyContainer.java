@@ -104,7 +104,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 			// Add apply button 
 			JButton tFilterApplyBtn = new JButton("Apply");
 			tFilterApplyBtn.setPreferredSize(new Dimension(65, 20));
-			tFilterApplyBtn.addActionListener( event-> { applyFilter(); });
+			tFilterApplyBtn.addActionListener( event-> applyFilter());
 			tUserIdFilterPanel.add(tFilterApplyBtn);
 			
 			GridBagConstraints  c  = new GridBagConstraints();
