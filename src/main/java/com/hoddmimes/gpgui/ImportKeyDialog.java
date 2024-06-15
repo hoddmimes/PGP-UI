@@ -12,6 +12,7 @@ import java.awt.TextField;
 import java.io.ByteArrayInputStream;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
 import javax.swing.ButtonGroup;
@@ -194,7 +195,7 @@ public class ImportKeyDialog extends JDialog {
 			while (tUserIdItr.hasNext()) {
 				byte[] tByteVector = tUserIdItr.next();
 				try {
-					tUserId = new String(tByteVector, "UTF-8");
+					tUserId = new String(tByteVector, StandardCharsets.UTF_8);
 					mKeyAttrPanel.addUserId(tUserId);
 				} catch (Exception e) {
 					e.printStackTrace();

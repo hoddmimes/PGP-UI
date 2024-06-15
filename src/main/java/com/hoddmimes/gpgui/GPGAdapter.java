@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
 import java.security.Security;
 import java.text.SimpleDateFormat;
@@ -430,7 +431,7 @@ public class GPGAdapter
 		 Iterator<byte[]> tUsrIdItr = pSeckey.getPublicKey().getRawUserIDs();
 		 String tUserId = "<unknown>";
 		 if (tUsrIdItr.hasNext()) {
-			 try {tUserId = new String( tUserId.getBytes(), "UTF-8");}
+			 try {tUserId = new String( tUserId.getBytes(), StandardCharsets.UTF_8);}
 			 catch( Exception e) {
 				 e.printStackTrace();
 			 }	

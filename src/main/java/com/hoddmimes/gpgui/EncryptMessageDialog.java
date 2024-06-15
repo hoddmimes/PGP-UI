@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -235,7 +236,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 		String tAlgo = (String) mEncryptAlgoComboBox.getSelectedItem();
 		
 		try {
-			byte[] tInBytes = mText.getText().getBytes("UTF-8"); 
+			byte[] tInBytes = mText.getText().getBytes(StandardCharsets.UTF_8);
 			PGPSecretKeyRing tSecretSignKeyRing = ( ((SigningUser)mSignComboBox.getSelectedItem()).mKeyRing == null) ? null : ((SigningUser) mSignComboBox.getSelectedItem()).mKeyRing.getSecretKeyRing();
 			tEncryptedByteArrayOutputStream = GPGAdapter.getInstance().encryptMessage(tInBytes, tEncKeyRing.getPublicEncryptionKey(), tSecretSignKeyRing, this,  tAlgo, tKeyStrength);
 		    mOrginalText = mText.getText();

@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
 
@@ -264,7 +265,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 		Iterator<byte[]> tUsrIdItr = pSeckey.getPublicKey().getRawUserIDs();
 		String tUserId = "<unknown>";
 		if (tUsrIdItr.hasNext()) {
-			try {tUserId = new String( tUserId.getBytes(), "UTF-8");}
+			try {tUserId = new String( tUserId.getBytes(), StandardCharsets.UTF_8);}
 			catch( Exception e) {
 				e.printStackTrace();
 			}

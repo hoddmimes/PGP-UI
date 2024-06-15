@@ -3,6 +3,7 @@ package com.hoddmimes.gpgui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -141,14 +142,14 @@ public class DecryptMessageDialog extends JDialog implements DecryptInterface {
 	public void decryptedMessage(byte[] pMessageBytes) {
 		String tCurrentText = mText.getText();
 		if (tCurrentText.isEmpty()) {
-			try {mText.setText( new String(pMessageBytes,"UTF-8"));}
+			try {mText.setText( new String(pMessageBytes, StandardCharsets.UTF_8));}
 			catch( Exception e) {
 				e.printStackTrace();
 			}
 		} else {
 			try {mText.setText( tCurrentText + 
 								"\n-----------------------------------------\n" +
-								new String(pMessageBytes,"UTF-8"));}
+								new String(pMessageBytes, StandardCharsets.UTF_8));}
 			catch( Exception e) {
 				e.printStackTrace();
 			}
