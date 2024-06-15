@@ -4,8 +4,6 @@ import java.awt.Component;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -261,7 +259,7 @@ public class GPGAdapter
 	}
 
 	 private int getEncryptionAlgorithm( String pAlgo, int pAESkeyStrength ) throws InvalidParameterException {
-		if (PGPGUI.USE_EXTENTION) {
+		if (PGPGUI.USE_EXTENSION) {
 			throw new InvalidParameterException("Not configured for Extended use");
 		}
 		if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_AES) == 0) {

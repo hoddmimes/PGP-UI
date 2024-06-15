@@ -95,7 +95,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 		
 		JPanel tEncryptAlgoPanel = new JPanel();
 		tEncryptAlgoPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		if (PGPGUI.USE_EXTENTION) {
+		if (PGPGUI.USE_EXTENSION) {
 			tEncryptAlgoPanel.setBorder(new EmptyBorder(10,10,10,10));
 		} else {
 			tEncryptAlgoPanel.setBorder(new EmptyBorder(10,10,10,40));
@@ -120,7 +120,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 		mAESStrengthComboBox = new JComboBox<>(mAESKeyStrength);
 		mAESKeyStrengthPanel.add( mAESStrengthComboBox );
 		mAESKeyStrengthPanel.add( new JLabel("bits"));
-		if (PGPGUI.USE_EXTENTION) {
+		if (PGPGUI.USE_EXTENSION) {
 			tEncryptAlgoPanel.add(mAESKeyStrengthPanel);
 		}
 		
@@ -203,7 +203,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_CAMELLIA_256 );
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_IDEA );
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_TWOFISH );
-			if (PGPGUI.USE_EXTENTION) {
+			if (PGPGUI.USE_EXTENSION) {
 				tAlgos.add(PGPGUI.ENCRYPT_ALGO_SNOWFLAKE );
 			}
 			return tAlgos.toArray(new String[0]);

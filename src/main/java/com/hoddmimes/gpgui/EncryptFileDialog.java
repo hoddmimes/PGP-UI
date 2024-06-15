@@ -262,7 +262,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		mAESStrengthComboBox = new JComboBox<>(mAESKeyStrength);
 		mAESKeyStrengthPanel.add( mAESStrengthComboBox );
 		mAESKeyStrengthPanel.add( new JLabel("bits"));
-		if (PGPGUI.USE_EXTENTION) {
+		if (PGPGUI.USE_EXTENSION) {
 			c = new GridBagConstraints();
 			c.anchor = GridBagConstraints.WEST;
 			c.insets = new Insets(0, 10, 0, 0);

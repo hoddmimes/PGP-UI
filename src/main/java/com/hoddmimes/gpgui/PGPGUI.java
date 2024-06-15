@@ -52,7 +52,7 @@ public class PGPGUI implements ActionListener {
 	private Font mMenuBoldFont;
 	
 	
-	static boolean USE_EXTENTION = false;
+	static boolean USE_EXTENSION = false;
 	
 	
 	private JFrame mFrame;
@@ -89,7 +89,7 @@ public class PGPGUI implements ActionListener {
 		int i = 0;
 		while( i  < pArgs.length ) {
 			if (pArgs[i].equalsIgnoreCase("-enable_extension")) {
-				USE_EXTENTION = Boolean.parseBoolean( pArgs[++i] );
+				USE_EXTENSION = Boolean.parseBoolean( pArgs[++i] );
 			}
 			i++;
 		}

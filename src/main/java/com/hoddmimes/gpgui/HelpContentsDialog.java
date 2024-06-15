@@ -103,7 +103,7 @@ public class HelpContentsDialog extends JDialog {
 		URL tURL = null;
 
 		try {
-			if (PGPGUI.USE_EXTENTION) {
+			if (PGPGUI.USE_EXTENSION) {
 				tURL = getClass().getClassLoader().getResource("helpext.html");
 				if (tURL == null) {
 					tURL =  getClass().getResource("./resources/helpext.html");
