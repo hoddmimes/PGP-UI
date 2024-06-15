@@ -15,3 +15,10 @@ But the program also maintains its own secret and public key files and having Gn
 * Key management
 
 See [About Page](./src/main/resources/help.html) for details.
+
+## Build
+
+Execute `mvn package` and the resulted app jar will be built in the `/target/` folder.
+You can start it with:
+
+    java -jar target/pgpgui-1.1-SNAPSHOT-jar-with-dependencies.jar
