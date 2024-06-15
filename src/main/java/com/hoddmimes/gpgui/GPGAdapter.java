@@ -155,7 +155,7 @@ public class GPGAdapter
 	private List<PGPSecretKeyRing> getSecretPGPKeyRings( String pKeyRingFilename) throws Exception 
 	{
 		PGPSecretKeyRingCollection tSecretKeyRingCollection = null;
-		ArrayList<PGPSecretKeyRing> tKeyRingList = new ArrayList<PGPSecretKeyRing>();
+		ArrayList<PGPSecretKeyRing> tKeyRingList = new ArrayList<>();
 
 		File tInFile = new File(pKeyRingFilename);
 		if ((!tInFile.exists()) || (!tInFile.canRead())) {
@@ -181,7 +181,7 @@ public class GPGAdapter
 	 private List<PGPPublicKeyRing> getPublicPGPKeyRings( String pKeyRingFilename) throws Exception 
 	 {
 		PGPPublicKeyRingCollection tPublicKeyRingCollection = null;
-		ArrayList<PGPPublicKeyRing> tKeyRingList = new ArrayList<PGPPublicKeyRing>();
+		ArrayList<PGPPublicKeyRing> tKeyRingList = new ArrayList<>();
 
 		File tInFile = new File(pKeyRingFilename);
 		if ((!tInFile.exists()) || (!tInFile.canRead())) {
@@ -206,7 +206,7 @@ public class GPGAdapter
 
 	 public List<KeyRingInterface> getSecretKeyRings() throws Exception {
 		 List<PGPSecretKeyRing> tList = null;
-		 ArrayList<KeyRingInterface> tKeyRingList = new ArrayList<KeyRingInterface>();
+		 ArrayList<KeyRingInterface> tKeyRingList = new ArrayList<>();
 		 
 		 tList = getSecretPGPKeyRings( Settings.getInstance().getPGPSecretKeyRingFilename());
 		 for( PGPSecretKeyRing kr : tList ) {
@@ -223,7 +223,7 @@ public class GPGAdapter
 	 
 	 public List<KeyRingInterface> getPublicKeyRings() throws Exception {
 		 List<PGPPublicKeyRing> tList = null;
-		 ArrayList<KeyRingInterface> tKeyRingList = new ArrayList<KeyRingInterface>();
+		 ArrayList<KeyRingInterface> tKeyRingList = new ArrayList<>();
 		 
 		 tList = getPublicPGPKeyRings( Settings.getInstance().getPGPPublicKeyRingFilename());
 		 for( PGPPublicKeyRing kr : tList ) {

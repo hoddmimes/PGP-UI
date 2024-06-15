@@ -67,7 +67,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 		mTable = new JTable();
 		mTableModel = new KeyTableModel(pEnableUserSeletions);
 		
-		mTableModelListener = new ArrayList<TableModelListener>();
+		mTableModelListener = new ArrayList<>();
 	
 		setupFilterPanel(pUserIdFilter);
 		setupKeyTable();

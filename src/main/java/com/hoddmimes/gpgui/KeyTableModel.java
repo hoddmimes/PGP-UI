@@ -43,8 +43,8 @@ public class KeyTableModel extends AbstractTableModel
 	boolean                     mEnableUserSelections;
 		
 	KeyTableModel(boolean pEnableUserSelections) {
-		mActiveUserKeyRings = new ArrayList<KeyRingInterface>();
-		mUserKeyRings = new ArrayList<KeyRingInterface>();
+		mActiveUserKeyRings = new ArrayList<>();
+		mUserKeyRings = new ArrayList<>();
 		mKeyRenderer = new KeyRenderer();
 		mKeyHeaderRender = new KeyHeaderRender();
 		mEnableUserSelections = pEnableUserSelections;

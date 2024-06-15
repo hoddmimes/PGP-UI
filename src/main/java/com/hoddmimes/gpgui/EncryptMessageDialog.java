@@ -103,13 +103,13 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 		
 		mSignPanel = new JPanel();
 		mSignPanel.add( new JLabel("Signing user"));
-		mSignComboBox = new JComboBox<SigningUser>( getSignUsers() );	
+		mSignComboBox = new JComboBox<>(getSignUsers());
 		mSignComboBox.addActionListener(this);
 		mSignPanel.add( mSignComboBox );
 		tEncryptAlgoPanel.add(mSignPanel);
 		
 		tEncryptAlgoPanel.add( new JLabel("Encrypt Algo"));
-		mEncryptAlgoComboBox = new JComboBox<String>( getEncryptionAlgorithms() );	
+		mEncryptAlgoComboBox = new JComboBox<>(getEncryptionAlgorithms());
 		mEncryptAlgoComboBox.addActionListener(this);
 		tEncryptAlgoPanel.add( mEncryptAlgoComboBox );
 		
@@ -117,7 +117,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 		mAESKeyStrengthPanel = new JPanel( new FlowLayout());
 		mAESKeyStrengthPanel.setBorder(new EmptyBorder(0, 15, 0, 0));
 		mAESKeyStrengthPanel.add( new JLabel("AES Encryption"));
-		mAESStrengthComboBox = new JComboBox<String>( mAESKeyStrength );	
+		mAESStrengthComboBox = new JComboBox<>(mAESKeyStrength);
 		mAESKeyStrengthPanel.add( mAESStrengthComboBox );
 		mAESKeyStrengthPanel.add( new JLabel("bits"));
 		if (PGPGUI.USE_EXTENTION) {
@@ -200,7 +200,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 
 	
 		private String[] getEncryptionAlgorithms() {
-			ArrayList<String> tAlgos = new ArrayList<String>();
+			ArrayList<String> tAlgos = new ArrayList<>();
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_AES );
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_CAST5 );
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_BLOWFISH );

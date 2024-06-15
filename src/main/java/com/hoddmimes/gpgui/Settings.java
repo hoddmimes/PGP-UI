@@ -36,7 +36,7 @@ public class Settings
 	Settings() {
 		String OS = System.getProperty("os.name").toLowerCase();
         mIsWindows = OS.contains("win");
-		mPasswordCache = new HashMap<Long,CachePasswordEntry>(27);
+		mPasswordCache = new HashMap<>(27);
 		this.restore();
 	}
 	

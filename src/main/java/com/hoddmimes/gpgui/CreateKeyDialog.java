@@ -121,12 +121,12 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 		mMailAddrTextField.setColumns(30);
 		addKeyParameterToPanel( tParameterPanel, "User Id", mMailAddrTextField, 0);
 		
-		mAlgoComboBox = new JComboBox<String>( mKeyAlgos );
+		mAlgoComboBox = new JComboBox<>(mKeyAlgos);
 		mAlgoComboBox.setSelectedIndex(0);
 		//mAlgoComboBox.addActionListener( this );
 		addKeyParameterToPanel( tParameterPanel, "Key Algorithm", mAlgoComboBox, 1);
 		
-		mStrengthComboBox = new JComboBox<String>( mKeyStrength );
+		mStrengthComboBox = new JComboBox<>(mKeyStrength);
 		mStrengthComboBox.setSelectedIndex(4);
 		//mStrengthComboBox.addActionListener( this );
 		addKeyParameterToPanel( tParameterPanel, "Key Strength", mStrengthComboBox, 2);

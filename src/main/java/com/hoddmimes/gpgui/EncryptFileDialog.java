@@ -230,7 +230,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		tParameterPanel.add(tSignUserLabel, c);
 		
 		
-		mSignComboBox = new JComboBox<SigningUser>( getSignUsers() );	
+		mSignComboBox = new JComboBox<>(getSignUsers());
 		mSignComboBox.addActionListener(this);
 		mSignComboBox.setPreferredSize(new Dimension(550, 23));
 		c = new GridBagConstraints();
@@ -247,7 +247,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		c.gridy = 1;
 		tParameterPanel.add(new JLabel("Encrypt Algo"), c);
 		
-		mEncryptAlgoComboBox = new JComboBox<String>( mEncryptAlgos );	
+		mEncryptAlgoComboBox = new JComboBox<>(mEncryptAlgos);
 		mEncryptAlgoComboBox.addActionListener(this);
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.WEST;
@@ -259,7 +259,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		mAESKeyStrengthPanel = new JPanel( new FlowLayout());
 		mAESKeyStrengthPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
 		mAESKeyStrengthPanel.add( new JLabel("AES Encryption"));
-		mAESStrengthComboBox = new JComboBox<String>( mAESKeyStrength );	
+		mAESStrengthComboBox = new JComboBox<>(mAESKeyStrength);
 		mAESKeyStrengthPanel.add( mAESStrengthComboBox );
 		mAESKeyStrengthPanel.add( new JLabel("bits"));
 		if (PGPGUI.USE_EXTENTION) {
