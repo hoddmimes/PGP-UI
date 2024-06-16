@@ -307,9 +307,9 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 
 		PGPKeyRingGenerator tKeyRing = null;
 		try {
-			if (tAlgo.compareTo(ALGO_RSA) == 0) {
+			if (tAlgo.equals(ALGO_RSA)) {
 				tKeyRing = createRSAKey(tMailAddress,  tPassword, Integer.parseInt(tStrenthValue));
-			} else if (tAlgo.compareTo(ALGO_DSA_ELGAM) == 0) {
+			} else if (tAlgo.equals(ALGO_DSA_ELGAM)) {
 				tKeyRing = createDSAELGAMKey(tMailAddress,  tPassword, Integer.parseInt(tStrenthValue));
 			} else {
 				AlertMessage.showMessage(this, "Implementation for key algorithm \"" + tAlgo + " \" is missing.");

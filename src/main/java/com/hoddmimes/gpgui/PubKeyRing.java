@@ -100,7 +100,7 @@ public class PubKeyRing implements PubKeyRingInterface {
 
 	@Override
 	public int getKeyRingRepositoryId() {
-		if (mKeyRingRepository.compareTo(GPGAdapter.GNUPG_REPOSITORY) == 0) {
+		if (mKeyRingRepository.equals(GPGAdapter.GNUPG_REPOSITORY)) {
 			return GPGAdapter.GNUPG_REPOSITORY_INT;
 		} else {
 			return GPGAdapter.GPGUI_REPOSITORY_INT;

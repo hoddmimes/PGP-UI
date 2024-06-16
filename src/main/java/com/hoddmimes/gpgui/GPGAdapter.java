@@ -256,7 +256,7 @@ public class GPGAdapter
 		if (PGPGUI.USE_EXTENSION) {
 			throw new InvalidParameterException("Not configured for Extended use");
 		}
-		if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_AES) == 0) {
+		if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_AES)) {
 		  return PGPEncryptedData.AES_256;
 		}
 //		  if (pAESkeyStrength == 256) {
@@ -270,15 +270,15 @@ public class GPGAdapter
 //		  } else {
 //			  throw new InvalidParameterException("Unknown encryption algorithm (" + pAlgo + ")");
 //		  }
-		else if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_BLOWFISH) == 0) {
+		else if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_BLOWFISH)) {
 			return PGPEncryptedData.BLOWFISH;
-		} else if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_CAMELLIA_256) == 0) {
+		} else if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_CAMELLIA_256)) {
 			return PGPEncryptedData.CAMELLIA_256;
-		} else if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_CAST5) == 0) {
+		} else if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_CAST5)) {
 			return PGPEncryptedData.CAST5;
-		} else if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_IDEA) == 0) {
+		} else if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_IDEA)) {
 			return PGPEncryptedData.IDEA;
-//		} else if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_SNOWFLAKE) == 0) {
+//		} else if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_SNOWFLAKE)) {
 //			return PGPEncryptedData.SNOWFLAKE;
 		} else {
 			throw new InvalidParameterException("Unknown encryption algorithm (" + pAlgo + ")");
