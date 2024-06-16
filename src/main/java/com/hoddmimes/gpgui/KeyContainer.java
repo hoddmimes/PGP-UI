@@ -4,9 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -142,7 +142,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 		mTable.setModel(mTableModel);
 		mTableModel.initiateColumnData( mTable.getColumnModel() );
 		mTable.getModel().addTableModelListener(this);
-		mTable.setFont(new java.awt.Font("Calibri",0,14));
+		mTable.setFont(new java.awt.Font("Calibri", Font.PLAIN,14));
 		mTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		mTable.setSelectionBackground(new Color( 242,242,242 ));
 		mTable.setSelectionForeground(Color.BLUE);
@@ -191,7 +191,6 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 	
 	@Override
 	public void tableChanged(TableModelEvent e) {
-		
 		if (e.getType() == e.UPDATE) {
 			//System.out.println("Table Update (row selected: " + mTableModel.getSelectedRow() + " )");
 			fixSelectionRow(e.getFirstRow() );
