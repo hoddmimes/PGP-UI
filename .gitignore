@@ -10,8 +10,17 @@ target
 # BlueJ files
 *.ctxt
 
+# Gradle directory
+.gradle/
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
+
+
+# Build directory
+build/
+
+
 
 # Package Files #
 *.jar
