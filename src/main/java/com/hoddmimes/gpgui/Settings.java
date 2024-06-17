@@ -35,12 +35,8 @@ public class Settings
 
 	Settings() {
 		String OS = System.getProperty("os.name").toLowerCase();
-		if (OS.indexOf("win") >= 0) {
-			mIsWindows = true;
-		} else {
-			mIsWindows = false;
-		}
-		mPasswordCache = new HashMap<Long,CachePasswordEntry>(27);
+        mIsWindows = OS.contains("win");
+		mPasswordCache = new HashMap<>(27);
 		this.restore();
 	}
 	

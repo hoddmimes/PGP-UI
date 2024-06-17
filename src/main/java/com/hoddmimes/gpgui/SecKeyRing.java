@@ -31,7 +31,7 @@ public class SecKeyRing implements SecKeyRingInterface {
 	@Override
 	public String getFirstUserId() {
 		if (mSecKeyRing.getSecretKey().getUserIDs().hasNext()) {
-			return (String) mSecKeyRing.getSecretKey().getUserIDs().next();
+			return mSecKeyRing.getSecretKey().getUserIDs().next();
 		} 
 		return "<not found>";
 	}
@@ -103,7 +103,7 @@ public class SecKeyRing implements SecKeyRingInterface {
 	@Override
 	public String getSecretKeyUserId() {
 		if ((mSecKeyRing.getSecretKey() != null) && (mSecKeyRing.getSecretKey().getUserIDs().hasNext())) {
-			return (String) mSecKeyRing.getSecretKey().getUserIDs().next();
+			return mSecKeyRing.getSecretKey().getUserIDs().next();
 		}
 		return "<unknown>";
 	}
@@ -111,7 +111,7 @@ public class SecKeyRing implements SecKeyRingInterface {
 
 	@Override
 	public int getKeyRingRepositoryId() {
-		if (mKeyRingRepository.compareTo(GPGAdapter.GNUPG_REPOSITORY) == 0) {
+		if (mKeyRingRepository.equals(GPGAdapter.GNUPG_REPOSITORY)) {
 			return GPGAdapter.GNUPG_REPOSITORY_INT;
 		} else {
 			return GPGAdapter.GPGUI_REPOSITORY_INT;

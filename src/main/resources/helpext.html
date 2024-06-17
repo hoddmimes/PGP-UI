@@ -2,60 +2,61 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>GPGUI V1.0</title>
+<title>PGP GUI V1.0</title>
 </head>
 <body>
-<h1>About GPGUI</h1>
+<h1>About PGP GUI</h1>
 GPGUI is a program wrapping the most fundamental PGP functionality provided via the 
-<a href="https://www.bouncycastle.org/about.html"> Bouncy Castle</a> API in a GUI.
+<a href="https://www.bouncycastle.org/about/"> Bouncy Castle</a> API in a GUI.
 Functionality such as create/list/delete/import key, encrypt/decrypt
 message and file is exposed by the program.
 <p>
-The program tries to access and used the key ring files defined by <a href="https://www.gnupg.org">GnuPG</a>. Having GnuPG installed 
-is optional. GPGUI i.e this program is maintaining its own public and secret key ring files so GPGUI can operate on its own without having GnuPG installed.
+The program tries to access and used the key ring files defined by <a href="https://www.gnupg.org">GnuPG</a>.
+Having GnuPG installed is however optional.
+GPGUI i.e this program is maintaining its own public and secret key ring files so GPGUI can operate on its own without having GnuPG installed.
 <p>
 <h2>List Keys</h2>
-Lists either public or secret keys in GnuPG and/or in GPGUI key ring files.
-The <i>Key Ring</i> attribute tells what key ring file the key belongs to i.e. GnuPG or GPGUI.
+Lists either public or secret keys in GnuPG and/or in PGP GUI key ring files.
+The <i>Key Ring</i> attribute tells what key ring file the key belongs to i.e. GnuPG or PGP GUI.
 <p>
-By double clicking on a key you will be expand, delete or delete  the key.
+By double clicking on a key you'll see a menu to expand or delete the key.
  
 <h2>Create Keys</h2>
 Dialog for creating and asymmetric key inclusive an encryption subkey. The algorithms available are RSA or DSA/ELGAM.
-The key can be save in GnuPG key ring files, if being available or in the GPGUI key ring files.
+The key can be saved in GnuPG key ring files if being installed or in the PGP GUI own key ring files.
 
 <h2>Import Key</h2>
-Armored key can be imported to the GnuPG key ring files, if being available or in the GPGUI key ring files.
+Armored key can be imported to the GnuPG key ring files, if being available or in the PGP GUI key ring files.
 
 <h2>Encrypt Message/File</h2>
 Encrypts a text or a file choosing a receiver public key and an encryption algorithm.
 If selecting any of the added on algorithms (see below) i.e. SnowFlake, AESx2, AESx4 or AESx8 the message can only be 
-decrypted using the GPGUI program otherwise GnuPG or PGP can be used to decrypt the message. 
+decrypted using the PGP GUI program otherwise GnuPG can be used to decrypt the message.
 
 <h2>Decrypt Message/File</h2>
-Encrypts an armored text or a file. Trying to find the secret key for decryption in GnuPG or GPGUI key ring files.
+Encrypts an armored text or a file. Trying to find the secret key for decryption in GnuPG or PGP GUI key ring files.
 
 <h2>Setting</h2>
-The setting dialog allows the locations of the GnuPG and GPGUI key ring files to be configured.
+The setting dialog allows the locations of the GnuPG and PGP GUI key ring files to be configured.
 In addition it is possible for how long time secret key password should be cached.
 
 <h2>Encrypt/Decrypt Extension</h2>
-Besides the standard encryption GnuPG algorithms GPGUI adds two additional ones, extended AES and SnowFlake.
+Besides the standard encryption GnuPG algorithms PGP GUI adds two additional ones, extended AES and SnowFlake.
 Extended AES allows larger keys sizes to be used and SnowFlake is a proprietary developed algorithm.
 <p>
 <h3>Extend AES</h3>
 GPGUI adds three additional flavors of AES using different key sizes 512, 1024 or 2048 bits. 
 When the larger key sizes than the standard 256 bits, the encryption is serialized from the multiple instances of
 the AES algorithm.If using a key size of 2048 bits, eighth instances are interlinked. Each instance will be initiated with with 
-an eighth of the the key i.e. 2048 / 8  = 256. AESx2 use 512 bit, AESx4 use 1024 bits and AESx8 use 2048 bits.
+an eighth of the key i.e. 2048 / 8  = 256. AESx2 use 512 bit, AESx4 use 1024 bits and AESx8 use 2048 bits.
 
 <h3>SnowFlake</h3>
-SnowFlake is proprietary exprimental algorithm. It uses a 1024 bit key.
+SnowFlake is proprietary experimental algorithm. It uses a 1024 bits key.
 The algorithm is a substitute algorithm using a 16x16x16 int table for substitution.
 The substitution table is constructed dynamically and randomly using the key as seed.
 The key is rotated randomly 0-64 bits after each substitution, depending on the data used in the substitution table.
 The word used for substitution is updated (xor) with a random word after being used.
-A input word is substituted by being xor with the selected word in the substitution table and the lowest 4 bytes 
+An input word is substituted by being xor with the selected word in the substitution table and the lowest 4 bytes
 in the key for the time being.
 <p>
 The <i>SnowFlake</i> code can be found below.

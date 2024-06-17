@@ -3,6 +3,7 @@ package com.hoddmimes.gpgui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -94,14 +95,14 @@ public class DecryptMessageDialog extends JDialog implements DecryptInterface {
 		
 		mDecryptBtn = new JButton("Decrypt");
 		mDecryptBtn.setActionCommand("DECRYPT");
-		mDecryptBtn.addActionListener( event-> { decryptMessage(); });
+		mDecryptBtn.addActionListener( event-> decryptMessage());
 		tButtonPane.add(mDecryptBtn);
 		getRootPane().setDefaultButton(mDecryptBtn);
 		
 	
 		mCancelBtn = new JButton("Cancel");
 		mCancelBtn.setActionCommand("CANCEL");
-		mCancelBtn.addActionListener(event-> {this.dispose();});
+		mCancelBtn.addActionListener(event-> this.dispose());
 		tButtonPane.add(mCancelBtn);	
 		this.pack();
 	}
@@ -119,7 +120,7 @@ public class DecryptMessageDialog extends JDialog implements DecryptInterface {
 
 	private void decryptMessage() {
 		String tMessage = null;
-		if (mText.getText().indexOf("BEGIN PGP MESSAGE") < 0) {
+		if (!mText.getText().contains("BEGIN PGP MESSAGE")) {
 			AlertMessage.showMessage(this, "Does not seams to be a valid PGP encrypted message");
 			return;
 		}
@@ -141,14 +142,14 @@ public class DecryptMessageDialog extends JDialog implements DecryptInterface {
 	public void decryptedMessage(byte[] pMessageBytes) {
 		String tCurrentText = mText.getText();
 		if (tCurrentText.isEmpty()) {
-			try {mText.setText( new String(pMessageBytes,"UTF-8"));}
+			try {mText.setText( new String(pMessageBytes, StandardCharsets.UTF_8));}
 			catch( Exception e) {
 				e.printStackTrace();
 			}
 		} else {
 			try {mText.setText( tCurrentText + 
 								"\n-----------------------------------------\n" +
-								new String(pMessageBytes,"UTF-8"));}
+								new String(pMessageBytes, StandardCharsets.UTF_8));}
 			catch( Exception e) {
 				e.printStackTrace();
 			}

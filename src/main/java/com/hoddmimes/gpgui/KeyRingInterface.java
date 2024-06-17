@@ -3,16 +3,16 @@ package com.hoddmimes.gpgui;
 
 public interface KeyRingInterface 
 {
-	public long 	getMasterKeyId();
-	public String	getFirstUserId();
-	public int		getSubKeysElements();
-	public int		getMasterKeyAlgorithm();
-	public String	getKeyRingRepositoryName();
-	public int		getKeyRingRepositoryId();
+	long 	getMasterKeyId();
+	String	getFirstUserId();
+	int		getSubKeysElements();
+	int		getMasterKeyAlgorithm();
+	String	getKeyRingRepositoryName();
+	int		getKeyRingRepositoryId();
 	
-	public void setIsSelected( boolean tFlag );
-	public boolean isSelected();
+	void setIsSelected(boolean tFlag);
+	boolean isSelected();
 	
-	public int getBitStrength();
+	int getBitStrength();
 	
 }

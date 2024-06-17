@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +95,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 		
 		JPanel tEncryptAlgoPanel = new JPanel();
 		tEncryptAlgoPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		if (PGPGUI.USE_EXTENTION) {
+		if (PGPGUI.USE_EXTENSION) {
 			tEncryptAlgoPanel.setBorder(new EmptyBorder(10,10,10,10));
 		} else {
 			tEncryptAlgoPanel.setBorder(new EmptyBorder(10,10,10,40));
@@ -102,13 +103,13 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 		
 		mSignPanel = new JPanel();
 		mSignPanel.add( new JLabel("Signing user"));
-		mSignComboBox = new JComboBox<SigningUser>( getSignUsers() );	
+		mSignComboBox = new JComboBox<>(getSignUsers());
 		mSignComboBox.addActionListener(this);
 		mSignPanel.add( mSignComboBox );
 		tEncryptAlgoPanel.add(mSignPanel);
 		
 		tEncryptAlgoPanel.add( new JLabel("Encrypt Algo"));
-		mEncryptAlgoComboBox = new JComboBox<String>( getEncryptionAlgorithms() );	
+		mEncryptAlgoComboBox = new JComboBox<>(getEncryptionAlgorithms());
 		mEncryptAlgoComboBox.addActionListener(this);
 		tEncryptAlgoPanel.add( mEncryptAlgoComboBox );
 		
@@ -116,10 +117,10 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 		mAESKeyStrengthPanel = new JPanel( new FlowLayout());
 		mAESKeyStrengthPanel.setBorder(new EmptyBorder(0, 15, 0, 0));
 		mAESKeyStrengthPanel.add( new JLabel("AES Encryption"));
-		mAESStrengthComboBox = new JComboBox<String>( mAESKeyStrength );	
+		mAESStrengthComboBox = new JComboBox<>(mAESKeyStrength);
 		mAESKeyStrengthPanel.add( mAESStrengthComboBox );
 		mAESKeyStrengthPanel.add( new JLabel("bits"));
-		if (PGPGUI.USE_EXTENTION) {
+		if (PGPGUI.USE_EXTENSION) {
 			tEncryptAlgoPanel.add(mAESKeyStrengthPanel);
 		}
 		
@@ -147,20 +148,20 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 			mEncryptBtn = new JButton("Encrypt");
 			mEncryptBtn.setActionCommand("ENCRYPT");
 			mEncryptBtn.setEnabled(false);
-			mEncryptBtn.addActionListener(event -> { encryptMessage();}); 
+			mEncryptBtn.addActionListener(event -> encryptMessage());
 			mButtonPanel.add(mEncryptBtn);
 		}
 		{
 			mRestoreBtn = new JButton("Restore Text");
 			mRestoreBtn.setActionCommand("RESTORE");
 			mRestoreBtn.setEnabled(false);
-			mRestoreBtn.addActionListener(event -> { restoreOrginalText();}); 
+			mRestoreBtn.addActionListener(event -> restoreOrginalText());
 			mButtonPanel.add(mRestoreBtn);
 		}
 		{
 			JButton tCancelButton = new JButton("Cancel");
 			tCancelButton.setActionCommand("Cancel");
-			tCancelButton.addActionListener( event-> { this.dispose();});
+			tCancelButton.addActionListener( event-> this.dispose());
 			mButtonPanel.add(tCancelButton);
 			getRootPane().setDefaultButton(tCancelButton);
 		}
@@ -171,11 +172,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		if (e.getType() == e.UPDATE) {
-			if (mKeyContainer.anyUserSelected()) {
-				mEncryptBtn.setEnabled(true);
-			} else {
-				mEncryptBtn.setEnabled(false);
-			}
+            mEncryptBtn.setEnabled(mKeyContainer.anyUserSelected());
 		}
 	}
 	
@@ -190,7 +187,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 			return tArr;
 		}
 		catch( Exception e ) {
-			AlertMessage.showMessage(this, "Failed to retreive secret keys: " + e.getMessage());
+			AlertMessage.showMessage(this, "Failed to retrieve secret keys: " + e.getMessage());
 			SigningUser[] tArr = new SigningUser[1];
 			tArr[0] = new SigningUser(null);
 			return tArr;
@@ -199,14 +196,14 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 
 	
 		private String[] getEncryptionAlgorithms() {
-			ArrayList<String> tAlgos = new ArrayList<String>();
+			ArrayList<String> tAlgos = new ArrayList<>();
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_AES );
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_CAST5 );
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_BLOWFISH );
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_CAMELLIA_256 );
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_IDEA );
 			tAlgos.add(PGPGUI.ENCRYPT_ALGO_TWOFISH );
-			if (PGPGUI.USE_EXTENTION) {
+			if (PGPGUI.USE_EXTENSION) {
 				tAlgos.add(PGPGUI.ENCRYPT_ALGO_SNOWFLAKE );
 			}
 			return tAlgos.toArray(new String[0]);
@@ -235,7 +232,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 		String tAlgo = (String) mEncryptAlgoComboBox.getSelectedItem();
 		
 		try {
-			byte[] tInBytes = mText.getText().getBytes("UTF-8"); 
+			byte[] tInBytes = mText.getText().getBytes(StandardCharsets.UTF_8);
 			PGPSecretKeyRing tSecretSignKeyRing = ( ((SigningUser)mSignComboBox.getSelectedItem()).mKeyRing == null) ? null : ((SigningUser) mSignComboBox.getSelectedItem()).mKeyRing.getSecretKeyRing();
 			tEncryptedByteArrayOutputStream = GPGAdapter.getInstance().encryptMessage(tInBytes, tEncKeyRing.getPublicEncryptionKey(), tSecretSignKeyRing, this,  tAlgo, tKeyStrength);
 		    mOrginalText = mText.getText();
@@ -251,11 +248,7 @@ public class EncryptMessageDialog extends JDialog implements  GPGAdapter.GetPass
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == mEncryptAlgoComboBox) {
 			String tAlgo = (String) mEncryptAlgoComboBox.getSelectedItem();
-			if (tAlgo.compareTo("AES") != 0) {
-				mAESStrengthComboBox.setEnabled(false);
-			} else {
-				mAESStrengthComboBox.setEnabled(true);
-			}
+            mAESStrengthComboBox.setEnabled("AES".equals(tAlgo));
 		}	
 	}
 	

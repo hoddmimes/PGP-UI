@@ -42,12 +42,10 @@ public class AlertMessage
 		((JComponent) tFrame.getContentPane()).setBorder(new EtchedBorder());
 		tFrame.add(tTextLabel, BorderLayout.CENTER);
 		
-		Timer tTime = new Timer(pDisplayTime, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tFrame.setVisible(false);
-				tFrame.dispose();
-			}
-		});
+		Timer tTime = new Timer(pDisplayTime, e -> {
+            tFrame.setVisible(false);
+            tFrame.dispose();
+        });
 		tTime.setRepeats(false);
 		tTime.start();
 		tTextLabel.setBorder(BorderFactory.createCompoundBorder(new EmptyBorder(5, 10, 5, 10), new EtchedBorder()));
@@ -98,7 +96,7 @@ public class AlertMessage
 		tButtonPanel.setBackground(mColor);
 		tButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		Button tOkButton = new Button("OK");
-		tOkButton.addActionListener(event -> {mDialog.dispose();});
+		tOkButton.addActionListener(event -> mDialog.dispose());
 		tButtonPanel.add(tOkButton);
 		mDialog.add(tButtonPanel, BorderLayout.SOUTH);
 		mDialog.setLocation(calcLocation(pParentComponent));

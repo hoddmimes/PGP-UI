@@ -12,6 +12,7 @@ import java.awt.TextField;
 import java.io.ByteArrayInputStream;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
 import javax.swing.ButtonGroup;
@@ -103,7 +104,7 @@ public class ImportKeyDialog extends JDialog {
 		
 			
 		mParseButton = new JButton("Parse");
-		mParseButton.addActionListener( event-> {parseKey();});
+		mParseButton.addActionListener( event-> parseKey());
 		tButtonPane.add(mParseButton);
 		getRootPane().setDefaultButton(mParseButton);
 
@@ -111,12 +112,12 @@ public class ImportKeyDialog extends JDialog {
 		mImportButton.setActionCommand("OK");
 		tButtonPane.add(mImportButton);
 		mImportButton.setEnabled(false);
-		mImportButton.addActionListener(event -> { addAndSaveKeyRing();}); 
+		mImportButton.addActionListener(event -> addAndSaveKeyRing());
 
 		JButton tCancelButton = new JButton("Cancel");
 		tCancelButton.setActionCommand("Cancel");
 		tButtonPane.add(tCancelButton);
-		tCancelButton.addActionListener(event->{ this.dispose();});
+		tCancelButton.addActionListener(event-> this.dispose());
 		
 		/**
 		 * Create south panel
@@ -156,7 +157,7 @@ public class ImportKeyDialog extends JDialog {
 			resetImport();
 		}
 		catch( Exception e) {
-			String tPrefixString = (mPGPKeyObject instanceof PGPPublicKeyRing) ? new String("failed to save public key; ") : new String("failed to save secret key; ");
+			String tPrefixString = (mPGPKeyObject instanceof PGPPublicKeyRing) ? "failed to save public key; " : "failed to save secret key; ";
 			AlertMessage.showMessage(this, tPrefixString + e.getMessage());
 			resetImport();
 		}
@@ -194,7 +195,7 @@ public class ImportKeyDialog extends JDialog {
 			while (tUserIdItr.hasNext()) {
 				byte[] tByteVector = tUserIdItr.next();
 				try {
-					tUserId = new String(tByteVector, "UTF-8");
+					tUserId = new String(tByteVector, StandardCharsets.UTF_8);
 					mKeyAttrPanel.addUserId(tUserId);
 				} catch (Exception e) {
 					e.printStackTrace();

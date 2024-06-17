@@ -121,12 +121,12 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 		mMailAddrTextField.setColumns(30);
 		addKeyParameterToPanel( tParameterPanel, "User Id", mMailAddrTextField, 0);
 		
-		mAlgoComboBox = new JComboBox<String>( mKeyAlgos );
+		mAlgoComboBox = new JComboBox<>(mKeyAlgos);
 		mAlgoComboBox.setSelectedIndex(0);
 		//mAlgoComboBox.addActionListener( this );
 		addKeyParameterToPanel( tParameterPanel, "Key Algorithm", mAlgoComboBox, 1);
 		
-		mStrengthComboBox = new JComboBox<String>( mKeyStrength );
+		mStrengthComboBox = new JComboBox<>(mKeyStrength);
 		mStrengthComboBox.setSelectedIndex(4);
 		//mStrengthComboBox.addActionListener( this );
 		addKeyParameterToPanel( tParameterPanel, "Key Strength", mStrengthComboBox, 2);
@@ -140,18 +140,15 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 		addKeyParameterToPanel( tParameterPanel, "Verify Password", mPasswordTextField2, 4);
 		
 		JCheckBox tVisiblePasswordCheckBox = new JCheckBox("Visible password");
-		tVisiblePasswordCheckBox.addChangeListener( new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				if (tVisiblePasswordCheckBox.isSelected()) {
-					mPasswordTextField1.setEchoChar('\u0000');
-					mPasswordTextField2.setEchoChar('\u0000');
-				} else {
-					mPasswordTextField1.setEchoChar('*');
-					mPasswordTextField2.setEchoChar('*');
-				}
-			}
-		});
+		tVisiblePasswordCheckBox.addChangeListener(e -> {
+            if (tVisiblePasswordCheckBox.isSelected()) {
+                mPasswordTextField1.setEchoChar('\u0000');
+                mPasswordTextField2.setEchoChar('\u0000');
+            } else {
+                mPasswordTextField1.setEchoChar('*');
+                mPasswordTextField2.setEchoChar('*');
+            }
+        });
 		
 		 mGnuPgSelection = new  JRadioButton("Add Key to GnuPG");
 		 mGnuPgSelection.setToolTipText("Add key to GnuPG key ring files");
@@ -173,12 +170,12 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
-		cancelButton.addActionListener( event-> {  dispose(); } );
+		cancelButton.addActionListener( event-> dispose());
 		
 		JButton okButton = new JButton("Create Key");
 		okButton.setActionCommand("Create Key");
 		buttonPane.add(okButton);
-		okButton.addActionListener( event-> {  createKey();  } );
+		okButton.addActionListener( event-> createKey());
 		
 		getRootPane().setDefaultButton(okButton);
 			
@@ -252,15 +249,15 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 			String regex = "^[<\\[A-Za-z0-9+_.-]+@[>\\]A-Za-z0-9+_.-]+$";
 			 
 			Pattern tPattern = Pattern.compile(regex);
+
+            for (String s : tArr) {
+                tMatcher = tPattern.matcher(s);
+                if (tMatcher.matches()) {
+                    return true;
+                }
+            }
 			
-			for( int i = 0;  i < tArr.length; i++) {
-				tMatcher = tPattern.matcher(tArr[i]);
-				if (tMatcher.matches()) {
-					return true;
-				}
-			}
-			
-			AlertMessage.showMessage(this, "Incomplete or Invalid mail adress");
+			AlertMessage.showMessage(this, "Incomplete or Invalid mail address");
 			return false;
 		}
 		
@@ -310,9 +307,9 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 
 		PGPKeyRingGenerator tKeyRing = null;
 		try {
-			if (tAlgo.compareTo(ALGO_RSA) == 0) {
+			if (tAlgo.equals(ALGO_RSA)) {
 				tKeyRing = createRSAKey(tMailAddress,  tPassword, Integer.parseInt(tStrenthValue));
-			} else if (tAlgo.compareTo(ALGO_DSA_ELGAM) == 0) {
+			} else if (tAlgo.equals(ALGO_DSA_ELGAM)) {
 				tKeyRing = createDSAELGAMKey(tMailAddress,  tPassword, Integer.parseInt(tStrenthValue));
 			} else {
 				AlertMessage.showMessage(this, "Implementation for key algorithm \"" + tAlgo + " \" is missing.");

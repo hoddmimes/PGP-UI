@@ -52,7 +52,7 @@ public class PGPGUI implements ActionListener {
 	private Font mMenuBoldFont;
 	
 	
-	static boolean USE_EXTENTION = false;
+	static boolean USE_EXTENSION = false;
 	
 	
 	private JFrame mFrame;
@@ -61,37 +61,35 @@ public class PGPGUI implements ActionListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] pArgs) {
-			parseArgunments( pArgs );
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						boolean tIsWindows = isWindows();
-						for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-							//System.out.println("UI Manager: " + info.getName());
-							if ((tIsWindows) &&("Windows".equals(info.getName()))) {
-								UIManager.setLookAndFeel(info.getClassName());
-								break;
-							} else if ((!tIsWindows) && ("Nimbus".equals(info.getName()))) {
-								UIManager.setLookAndFeel(info.getClassName());
-								break;
-							}
-						}
-						PGPGUI mgpgui = new PGPGUI();
-						mgpgui.mFrame.setVisible(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
+			parseArguments( pArgs );
+			EventQueue.invokeLater(() -> {
+                try {
+                    boolean tIsWindows = isWindows();
+                    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                        //System.out.println("UI Manager: " + info.getName());
+                        if ((tIsWindows) &&("Windows".equals(info.getName()))) {
+                            UIManager.setLookAndFeel(info.getClassName());
+                            break;
+                        } else if ((!tIsWindows) && ("Nimbus".equals(info.getName()))) {
+                            UIManager.setLookAndFeel(info.getClassName());
+                            break;
+                        }
+                    }
+                    PGPGUI mgpgui = new PGPGUI();
+                    mgpgui.mFrame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
 		}
 	
 	
-	private static void parseArgunments( String[] pArgs )
+	private static void parseArguments(String[] pArgs )
 	{
 		int i = 0;
 		while( i  < pArgs.length ) {
 			if (pArgs[i].equalsIgnoreCase("-enable_extension")) {
-				USE_EXTENTION = Boolean.parseBoolean( pArgs[++i] );
+				USE_EXTENSION = Boolean.parseBoolean( pArgs[++i] );
 			}
 			i++;
 		}
@@ -100,11 +98,7 @@ public class PGPGUI implements ActionListener {
 	private static boolean isWindows() 
 	{
 		String OS = System.getProperty("os.name").toLowerCase();
-		if (OS.indexOf("win") >= 0) {
-		  return true;
-		} else {
-		  return false;
-		}
+        return OS.contains("win");
 	}
 	
 	
@@ -127,7 +121,7 @@ public class PGPGUI implements ActionListener {
 		mFrame = new JFrame();
 		mFrame.setBounds(100, 100, 650, 80);
 		mFrame.setResizable(false);
-		mFrame.setTitle("PGPGUI V1.0");
+		mFrame.setTitle("PGPGUI V1.1");
 		GPGAdapter.setAppIcon( this, mFrame );
 		mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -137,36 +131,36 @@ public class PGPGUI implements ActionListener {
 		// Add Crypto options 
 		JMenu tCryptoMenu = new JMenu("Crypto");
 		tCryptoMenu.setFont(mMenuBoldFont);
-		creatmenuItem(tCryptoMenu, "Encrypt Message", MENU_CMD_ENCRYPT_MSG);
-		creatmenuItem(tCryptoMenu, "Decrypt Message", MENU_CMD_DECRYPT_MSG);
-		creatmenuItem(tCryptoMenu, "Encrypt File", MENU_CMD_ENCRYPT_FILE);
-		creatmenuItem(tCryptoMenu, "Decrypt File", MENU_CMD_DECRYPT_FILE);
-		creatmenuItem(tCryptoMenu, "Settings", MENU_CMD_SETTINGS);
-		creatmenuItem(tCryptoMenu, "Exit", MENU_CMD_EXIT);		
+		createMenuItem(tCryptoMenu, "Encrypt Message", MENU_CMD_ENCRYPT_MSG);
+		createMenuItem(tCryptoMenu, "Decrypt Message", MENU_CMD_DECRYPT_MSG);
+		createMenuItem(tCryptoMenu, "Encrypt File", MENU_CMD_ENCRYPT_FILE);
+		createMenuItem(tCryptoMenu, "Decrypt File", MENU_CMD_DECRYPT_FILE);
+		createMenuItem(tCryptoMenu, "Settings", MENU_CMD_SETTINGS);
+		createMenuItem(tCryptoMenu, "Exit", MENU_CMD_EXIT);
 		tMenuBar.add( tCryptoMenu );
 		
 		
 		
 		JMenu tKeyMenu = new JMenu("Keys");
 		tKeyMenu.setFont(mMenuBoldFont);
-		creatmenuItem(tKeyMenu, "List Public Keys", MENU_CMD_LIST_PUBLIC_KEYS);
-		creatmenuItem(tKeyMenu, "List Secret Keys", MENU_CMD_LIST_SECRET_KEYS);
-		creatmenuItem(tKeyMenu, "Import Key", MENU_CMD_IMPORT_KEY);
-		creatmenuItem(tKeyMenu, "Create Key", MENU_CMD_CREATE_KEY);
+		createMenuItem(tKeyMenu, "List Public Keys", MENU_CMD_LIST_PUBLIC_KEYS);
+		createMenuItem(tKeyMenu, "List Secret Keys", MENU_CMD_LIST_SECRET_KEYS);
+		createMenuItem(tKeyMenu, "Import Key", MENU_CMD_IMPORT_KEY);
+		createMenuItem(tKeyMenu, "Create Key", MENU_CMD_CREATE_KEY);
 		tMenuBar.add( tKeyMenu );
 		
 		
 		
 		JMenu tHelpMenu = new JMenu("Help");
 		tHelpMenu.setFont(mMenuBoldFont);
-		//creatmenuItem(tHelpMenu, "About", MENU_CMD_HELP_ABOUT);
-		creatmenuItem(tHelpMenu, "Contents", MENU_CMD_HELP_CONTENTS);
+		//createMenuItem(tHelpMenu, "About", MENU_CMD_HELP_ABOUT);
+		createMenuItem(tHelpMenu, "Contents", MENU_CMD_HELP_CONTENTS);
 		tMenuBar.add( tHelpMenu );
 			
 		mFrame.getContentPane().add(tMenuBar, BorderLayout.NORTH);
 	}
 	
-	private JMenuItem creatmenuItem(JMenu pMenu, String pLabel, String pCommand) {
+	private JMenuItem createMenuItem(JMenu pMenu, String pLabel, String pCommand) {
 		JMenuItem tMenuItem = new JMenuItem(pLabel);
 		tMenuItem.setFont(mMenuFont);
 		tMenuItem.addActionListener(this);
@@ -179,7 +173,7 @@ public class PGPGUI implements ActionListener {
 		Point tPoint = mFrame.getLocation();
 		Dimension tSize = mFrame.getSize();
 		
-		Point tNewPos = new Point( (int) (tPoint.x + ((double)tSize.getWidth() / 2.0)), (int) ((double) tPoint.y + (double) (tSize.getHeight() * 0.8)));
+		Point tNewPos = new Point( (int) (tPoint.x + (tSize.getWidth() / 2.0)), (int) ((double) tPoint.y + (tSize.getHeight() * 0.8)));
 		return tNewPos;
 	}
 	

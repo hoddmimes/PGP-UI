@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.List;
 
@@ -120,7 +122,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 		c.gridx = 2;
 		c.gridy = tRow;
 		mContentPanel.add(tInBrowseBtn, c);
-		tInBrowseBtn.addActionListener(event->{ browseInFiles(); });
+		tInBrowseBtn.addActionListener(event-> browseInFiles());
 		
 		
 		
@@ -152,7 +154,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 		c.gridx = 2;
 		c.gridy = tRow;
 		mContentPanel.add(tOutBrowseBtn, c);
-		tOutBrowseBtn.addActionListener(event->{ browseOutFiles(); });
+		tOutBrowseBtn.addActionListener(event-> browseOutFiles());
 		
 		/**
 		 * Add South Panel
@@ -187,13 +189,13 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 				mDecryptBtn.setActionCommand("DECRYPT");
 				tButtonPanel.add(mDecryptBtn);
 				getRootPane().setDefaultButton(mDecryptBtn);
-				mDecryptBtn.addActionListener(event-> { decryptFile(); });
+				mDecryptBtn.addActionListener(event-> decryptFile());
 			}
 			{
 				JButton tCancelBtn = new JButton("Cancel");
 				tCancelBtn.setActionCommand("Cancel");
 				tButtonPanel.add(tCancelBtn);
-				tCancelBtn.addActionListener( event -> { this.dispose(); });
+				tCancelBtn.addActionListener( event -> this.dispose());
 			}
 		}
 	}
@@ -210,7 +212,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 			mInFilenameTextFile.setText(tSelectedFile.getAbsolutePath());
 			Settings.getInstance().setCurrentDir(tSelectedFile.getParent());
 			if (mOutFilenameTextFile.getText().isEmpty()) {
-				String tName = new String(tSelectedFile.getAbsolutePath());
+				String tName = tSelectedFile.getAbsolutePath();
 				if (tName.endsWith(".asc")) {
 					tName = tName.substring(0, tName.length() - ".asc".length());
 				}
@@ -238,18 +240,14 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 	
 	private boolean isArmoredFile( File pInFile ) {
 		InputStream tInStream = null;
-		
+
 		try {
 		  byte[] tBuffer = new byte[ 2048 ];
-		  tInStream = new FileInputStream(pInFile);
+		  tInStream = Files.newInputStream(pInFile.toPath());
 		  int tLen = tInStream.read( tBuffer, 0, tBuffer.length);
 		  tInStream.close();
 		  String tString = new String( tBuffer, 0, tLen );
-		  if (tString.indexOf("BEGIN PGP MESSAGE") >= 0) {
-			  return true;
-		  } else {
-			  return false;
-		  }
+          return tString.contains("BEGIN PGP MESSAGE");
 		}
 		catch( Exception e) {
 			if (tInStream != null) {
@@ -264,7 +262,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 		Iterator<byte[]> tUsrIdItr = pSeckey.getPublicKey().getRawUserIDs();
 		String tUserId = "<unknown>";
 		if (tUsrIdItr.hasNext()) {
-			try {tUserId = new String( tUserId.getBytes(), "UTF-8");}
+			try {tUserId = new String( tUserId.getBytes(), StandardCharsets.UTF_8);}
 			catch( Exception e) {
 				e.printStackTrace();
 			}

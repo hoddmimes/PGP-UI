@@ -100,9 +100,9 @@ public class SettingsDialog extends JDialog {
 		JPanel tButtonPanel = new JPanel( tFlowLayout );
 		
 		JButton tSaveButton = new JButton("Save");
-		tSaveButton.addActionListener(event-> { saveParameters(); });
+		tSaveButton.addActionListener(event-> saveParameters());
 		JButton tCancelButton = new JButton("Cancel");
-		tCancelButton.addActionListener(event->{this.dispose();});
+		tCancelButton.addActionListener(event-> this.dispose());
 		
 		tButtonPanel.add(tCancelButton);
 		tButtonPanel.add(tSaveButton);
@@ -233,7 +233,7 @@ public class SettingsDialog extends JDialog {
 			mButton = new JButton("...");
 			mButton.setFont(new Font( mCheckBox.getFont().getFamily(), Font.BOLD, (mCheckBox.getFont().getSize()+2)));
 			mButton.setPreferredSize(new Dimension(45, 18));
-			mButton.addActionListener(event-> { browsekeyRingFile(); } );
+			mButton.addActionListener(event-> browsekeyRingFile());
 			
 			mParameter = createTextField(pInitFilename, 32, true);
 			mParameter.addFocusListener(this);
@@ -291,7 +291,7 @@ public class SettingsDialog extends JDialog {
 			tFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			if (!mParameter.getText().isEmpty()) {
 				int tIdx = mParameter.getText().lastIndexOf(File.separatorChar);
-				String tDir = (tIdx >= 0) ? mParameter.getText().substring(0, tIdx) : new String("./");
+				String tDir = (tIdx >= 0) ? mParameter.getText().substring(0, tIdx) : "./";
 				tFileChooser.setCurrentDirectory(new File(tDir));
 			} else {
 				tFileChooser.setCurrentDirectory(new File("./"));

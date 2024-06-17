@@ -65,7 +65,7 @@ public class SecureRandomSHA256 extends SecureRandom
 	}
 	
 	private long fugazi( int pValue ) {
-		double x = (double) pValue;
+		double x = pValue;
 		while( x > 1.0d ) {
 			x = x / 10.0d;
 		}
@@ -105,14 +105,8 @@ public class SecureRandomSHA256 extends SecureRandom
         {                
         	mState = mSHA256.digest();
 
-            if (bytes.length - off > mState.length)
-            {
-                System.arraycopy(mState, 0, bytes, off, mState.length);
-            }
-            else
-            {
-                System.arraycopy(mState, 0, bytes, off, bytes.length - off);
-            }
+			int length = Math.min(bytes.length - off, mState.length);
+			System.arraycopy(mState, 0, bytes, off, length);
 
             off += mState.length;
 

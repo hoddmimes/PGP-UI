@@ -78,7 +78,7 @@ public class ListKeysDialog extends JDialog implements TableModelListener {
 		
 		mOhneKorrekturenButton = new JButton("OK");
 		mOhneKorrekturenButton.setActionCommand("OK");
-		mOhneKorrekturenButton.addActionListener( event-> { this.dispose();});
+		mOhneKorrekturenButton.addActionListener( event-> this.dispose());
 		tButtonPane.add(mOhneKorrekturenButton);
 		getRootPane().setDefaultButton(mOhneKorrekturenButton);
 		

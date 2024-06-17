@@ -4,12 +4,13 @@ import java.awt.Component;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.security.Security;
 import java.text.SimpleDateFormat;
@@ -71,16 +72,16 @@ public class GPGAdapter
 	
 	public interface GetPasswordInterface 
 	{
-		public char[] getPasswordForDecrypt( long pKeyId, String puserId );
-		public Component getComponent();
+		char[] getPasswordForDecrypt(long pKeyId, String puserId);
+		Component getComponent();
 	}
 	
 	public interface DecryptInterface 
 	{
-		public void 	decryptedMessage( byte[] pMessageBytes);
-		public char[]   getPasswordForDecrypt( long pKeyId, String pUserId);
-		public void 	encryptSignOnePassUsers( String pUserList);
-		public void 	encryptSignUsers( String pUserList);
+		void 	decryptedMessage(byte[] pMessageBytes);
+		char[]   getPasswordForDecrypt(long pKeyId, String pUserId);
+		void 	encryptSignOnePassUsers(String pUserList);
+		void 	encryptSignUsers(String pUserList);
 	}
 
 	static void setAppIcon( Object pSourceObject, java.awt.Window pWindow) {
@@ -93,13 +94,7 @@ public class GPGAdapter
 			if (tURL != null) {
 				pWindow.setIconImage(ImageIO.read( tURL));
 			} else {
-//				FileOutputStream tOut = new FileOutputStream("frotz.frotz");
-//				tOut.write(42);
-//				tOut.close();
 				File tFile = new File("./resources/lock32.png");
-				if (!tFile.exists()) {
-					tFile = new File("./gpgui/resources/lock32.png");
-				}
 				pWindow.setIconImage(ImageIO.read( tFile ));
 			}
 		}
@@ -152,7 +147,7 @@ public class GPGAdapter
 	private List<PGPSecretKeyRing> getSecretPGPKeyRings( String pKeyRingFilename) throws Exception 
 	{
 		PGPSecretKeyRingCollection tSecretKeyRingCollection = null;
-		ArrayList<PGPSecretKeyRing> tKeyRingList = new ArrayList<PGPSecretKeyRing>();
+		ArrayList<PGPSecretKeyRing> tKeyRingList = new ArrayList<>();
 
 		File tInFile = new File(pKeyRingFilename);
 		if ((!tInFile.exists()) || (!tInFile.canRead())) {
@@ -160,13 +155,13 @@ public class GPGAdapter
 		}
 
 		try {
-			tSecretKeyRingCollection = new PGPSecretKeyRingCollection(PGPUtil.getDecoderStream(new FileInputStream(pKeyRingFilename)), new JcaKeyFingerprintCalculator());
+			tSecretKeyRingCollection = new PGPSecretKeyRingCollection(PGPUtil.getDecoderStream(Files.newInputStream(Paths.get(pKeyRingFilename))), new JcaKeyFingerprintCalculator());
 		}
 		catch( Exception e) {
 			throw new IOException("Failed to open\"" + pKeyRingFilename + "\" key ring.");
 		}
 
-		Iterator tKeyRingItr = tSecretKeyRingCollection.getKeyRings();
+		Iterator<PGPSecretKeyRing> tKeyRingItr = tSecretKeyRingCollection.getKeyRings();
 			
 		while (tKeyRingItr.hasNext()) {
 			tKeyRingList.add( (PGPSecretKeyRing) tKeyRingItr.next());
@@ -178,7 +173,7 @@ public class GPGAdapter
 	 private List<PGPPublicKeyRing> getPublicPGPKeyRings( String pKeyRingFilename) throws Exception 
 	 {
 		PGPPublicKeyRingCollection tPublicKeyRingCollection = null;
-		ArrayList<PGPPublicKeyRing> tKeyRingList = new ArrayList<PGPPublicKeyRing>();
+		ArrayList<PGPPublicKeyRing> tKeyRingList = new ArrayList<>();
 
 		File tInFile = new File(pKeyRingFilename);
 		if ((!tInFile.exists()) || (!tInFile.canRead())) {
@@ -186,13 +181,13 @@ public class GPGAdapter
 	   	}
 
 		try {
-			tPublicKeyRingCollection = new PGPPublicKeyRingCollection(PGPUtil.getDecoderStream(new FileInputStream(pKeyRingFilename)), new JcaKeyFingerprintCalculator());
+			tPublicKeyRingCollection = new PGPPublicKeyRingCollection(PGPUtil.getDecoderStream(Files.newInputStream(Paths.get(pKeyRingFilename))), new JcaKeyFingerprintCalculator());
 	   	}
 		catch( Exception e) {
 			throw new IOException("Failed to open\"" + pKeyRingFilename + "\" key ring.");
 	   	}
 
-		Iterator tKeyRingItr = tPublicKeyRingCollection.getKeyRings();
+		Iterator<PGPPublicKeyRing> tKeyRingItr = tPublicKeyRingCollection.getKeyRings();
 	   		
 		while (tKeyRingItr.hasNext()) {
 			tKeyRingList.add( (PGPPublicKeyRing) tKeyRingItr.next());
@@ -203,7 +198,7 @@ public class GPGAdapter
 
 	 public List<KeyRingInterface> getSecretKeyRings() throws Exception {
 		 List<PGPSecretKeyRing> tList = null;
-		 ArrayList<KeyRingInterface> tKeyRingList = new ArrayList<KeyRingInterface>();
+		 ArrayList<KeyRingInterface> tKeyRingList = new ArrayList<>();
 		 
 		 tList = getSecretPGPKeyRings( Settings.getInstance().getPGPSecretKeyRingFilename());
 		 for( PGPSecretKeyRing kr : tList ) {
@@ -220,7 +215,7 @@ public class GPGAdapter
 	 
 	 public List<KeyRingInterface> getPublicKeyRings() throws Exception {
 		 List<PGPPublicKeyRing> tList = null;
-		 ArrayList<KeyRingInterface> tKeyRingList = new ArrayList<KeyRingInterface>();
+		 ArrayList<KeyRingInterface> tKeyRingList = new ArrayList<>();
 		 
 		 tList = getPublicPGPKeyRings( Settings.getInstance().getPGPPublicKeyRingFilename());
 		 for( PGPPublicKeyRing kr : tList ) {
@@ -236,7 +231,7 @@ public class GPGAdapter
 	 }
 
 	private SecKeyRingInterface findSecretKeyRing(long pKeyId) throws Exception {
-		List<KeyRingInterface> tKeyRings = (List<KeyRingInterface>) this.getSecretKeyRings();
+		List<KeyRingInterface> tKeyRings = this.getSecretKeyRings();
 		for (KeyRingInterface kr : tKeyRings) {
 			SecKeyRingInterface skr = (SecKeyRingInterface) kr;
 			if (skr.isSecretKeyInRing(pKeyId)) {
@@ -258,10 +253,10 @@ public class GPGAdapter
 	}
 
 	 private int getEncryptionAlgorithm( String pAlgo, int pAESkeyStrength ) throws InvalidParameterException {
-		if (PGPGUI.USE_EXTENTION) {
+		if (PGPGUI.USE_EXTENSION) {
 			throw new InvalidParameterException("Not configured for Extended use");
 		}
-		if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_AES) == 0) {
+		if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_AES)) {
 		  return PGPEncryptedData.AES_256;
 		}
 //		  if (pAESkeyStrength == 256) {
@@ -275,15 +270,15 @@ public class GPGAdapter
 //		  } else {
 //			  throw new InvalidParameterException("Unknown encryption algorithm (" + pAlgo + ")");
 //		  }
-		else if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_BLOWFISH) == 0) {
+		else if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_BLOWFISH)) {
 			return PGPEncryptedData.BLOWFISH;
-		} else if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_CAMELLIA_256) == 0) {
+		} else if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_CAMELLIA_256)) {
 			return PGPEncryptedData.CAMELLIA_256;
-		} else if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_CAST5) == 0) {
+		} else if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_CAST5)) {
 			return PGPEncryptedData.CAST5;
-		} else if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_IDEA) == 0) {
+		} else if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_IDEA)) {
 			return PGPEncryptedData.IDEA;
-//		} else if (pAlgo.compareTo(PGPGUI.ENCRYPT_ALGO_SNOWFLAKE) == 0) {
+//		} else if (pAlgo.equals(PGPGUI.ENCRYPT_ALGO_SNOWFLAKE)) {
 //			return PGPEncryptedData.SNOWFLAKE;
 		} else {
 			throw new InvalidParameterException("Unknown encryption algorithm (" + pAlgo + ")");
@@ -304,7 +299,7 @@ public class GPGAdapter
 			 char[] tPassword = Settings.getInstance().getPasswordForKeyId(tSecSignKey.getKeyID());
 						 
 			 if (tPassword == null) {
-				 tPassword = pGetPasswordInterface.getPasswordForDecrypt(tSecSignKey.getKeyID(), (String) pSecSignKeyRing.getPublicKey().getUserIDs().next());
+				 tPassword = pGetPasswordInterface.getPasswordForDecrypt(tSecSignKey.getKeyID(), pSecSignKeyRing.getPublicKey().getUserIDs().next());
 			 }	 
 			 
 			 PGPPrivateKey pgpPrivKey = getPrivateKey(tSecSignKey, tPassword);
@@ -318,10 +313,10 @@ public class GPGAdapter
 		 }
 		 
 		 
-		 PGPLiteralDataGenerator tLitterdataData = new PGPLiteralDataGenerator();
+		 PGPLiteralDataGenerator tLiteralData = new PGPLiteralDataGenerator();
 		
 		 
-		 OutputStream tLitteralOutputStream = tLitterdataData.open(tCompOutputStream, // the compressed output stream
+		 OutputStream tLitteralOutputStream = tLiteralData.open(tCompOutputStream, // the compressed output stream
 	                											   PGPLiteralData.BINARY, "console", // "filename" to store
 	                											   pInMessage.length, // length of clear data
 	                											   new Date()); // current time
@@ -367,7 +362,7 @@ public class GPGAdapter
 		 
 		 File tTmpFile = File.createTempFile("pgpui", null);
 		 tTmpFile.deleteOnExit();
-		 OutputStream tTmpOutputStream = new FileOutputStream(tTmpFile);
+		 OutputStream tTmpOutputStream = Files.newOutputStream(tTmpFile.toPath());
 		 
 
 		 
@@ -375,7 +370,7 @@ public class GPGAdapter
 		 
 		 OutputStream tCompOutputStream = tCompressDataGen.open(tTmpOutputStream); 
 		
-		 PGPLiteralDataGenerator tLitterdataData = new PGPLiteralDataGenerator();
+		 PGPLiteralDataGenerator tLiteralData = new PGPLiteralDataGenerator();
 		 
 		 PGPUtil.writeFileToLiteralData(tCompOutputStream, // the compressed output stream
 				 					    PGPLiteralData.BINARY,
@@ -388,10 +383,10 @@ public class GPGAdapter
 		 
 		 
 		// Init encrypted data generator
-		 OutputStream tFileOutputStream = new FileOutputStream(pOutFile);
+		 OutputStream tFileOutputStream = Files.newOutputStream(pOutFile.toPath());
 		 OutputStream tOutStream = (pArmoredFlag) ? new ArmoredOutputStream(tFileOutputStream) : tFileOutputStream;
 		 
-		 InputStream tTmpInputStream = new FileInputStream( tTmpFile );
+		 InputStream tTmpInputStream = Files.newInputStream(tTmpFile.toPath());
 		 
 		 
 		 PGPDataEncryptorBuilder tEncBuilder = new BcPGPDataEncryptorBuilder(getEncryptionAlgorithm( pEncryptAlgo, pAESStrength)).setWithIntegrityPacket(true);
@@ -414,7 +409,7 @@ public class GPGAdapter
 		 if (pArmoredFlag) {
 			 tFileOutputStream.close(); 
 		 }
-		 double tSec = (double) ((double)(System.currentTimeMillis() - tStartTime) / 1000.0d);
+		 double tSec = (double)(System.currentTimeMillis() - tStartTime) / 1000.0d;
 		 
 		 tTmpInputStream.close();
 		 tTmpFile.delete();
@@ -430,7 +425,7 @@ public class GPGAdapter
 		 Iterator<byte[]> tUsrIdItr = pSeckey.getPublicKey().getRawUserIDs();
 		 String tUserId = "<unknown>";
 		 if (tUsrIdItr.hasNext()) {
-			 try {tUserId = new String( tUserId.getBytes(), "UTF-8");}
+			 try {tUserId = new String( tUserId.getBytes(), StandardCharsets.UTF_8);}
 			 catch( Exception e) {
 				 e.printStackTrace();
 			 }	
@@ -442,9 +437,9 @@ public class GPGAdapter
 		ByteArrayOutputStream tOutStream = new ByteArrayOutputStream();
 		int tBytesRead = 0;
 
-		// System.out.println("Orginal File: " +
-		// tLitteralData.getFileName() + " ModTime: " +
-		// cSDF.format(tLitteralData.getModificationTime()));
+		// System.out.println("Original File: " +
+		// tLiteralData.getFileName() + " ModTime: " +
+		// cSDF.format(tLiteralData.getModificationTime()));
 
 		InputStream tInputStream = pLiteralData.getInputStream();
 		byte[] tBuffer = new byte[1024];
@@ -472,10 +467,8 @@ public class GPGAdapter
 		// the first object might be a PGP marker packet.
 		 tEncDataList = (tPGPObject instanceof  PGPEncryptedDataList) ? (PGPEncryptedDataList) tPGPObject : (PGPEncryptedDataList) tPGPObjectFactory.nextObject();
 		 
-		 @SuppressWarnings("unchecked")
-		Iterator<PGPPublicKeyEncryptedData> tEncDataItr = tEncDataList.iterator();
-		 while( tEncDataItr.hasNext() ) {
-			 PGPPublicKeyEncryptedData tEncData = tEncDataItr.next();
+		 for (PGPEncryptedData tEncDataEl : tEncDataList) {
+			 PGPPublicKeyEncryptedData tEncData = (PGPPublicKeyEncryptedData)tEncDataEl;
 			 tSecKeyRing = GPGAdapter.getInstance().findSecretKeyRing(tEncData.getKeyID());
 			 
 			 if (tSecKeyRing == null) {
@@ -547,7 +540,7 @@ public class GPGAdapter
 					Iterator<String> tUserItr = pk.getUserIDs();
 					while( tUserItr.hasNext()) {
 						if (!tFirst) {
-							sb.append( ", " + tUserItr.next());
+							sb.append(", ").append(tUserItr.next());
 						} else {
 							sb.append(tUserItr.next());
 							tFirst = false;
@@ -578,7 +571,7 @@ public class GPGAdapter
 					Iterator<String> tUserItr = pk.getUserIDs();
 					while( tUserItr.hasNext()) {
 						if (!tFirst) {
-							sb.append( ", " + tUserItr.next());
+							sb.append(", ").append(tUserItr.next());
 						} else {
 							sb.append(tUserItr.next());
 							tFirst = false;
@@ -604,7 +597,7 @@ public class GPGAdapter
 
 		try {
 			try {
-				tInStream = PGPUtil.getDecoderStream(new FileInputStream(pInFile));
+				tInStream = PGPUtil.getDecoderStream(Files.newInputStream(pInFile.toPath()));
 			} catch (IOException e) {
 				throw new IOException("failed to decode encrypted stream (" + e.getMessage() + ")");
 			}
@@ -616,10 +609,8 @@ public class GPGAdapter
 			tEncDataList = (tPGPObject instanceof PGPEncryptedDataList) ? (PGPEncryptedDataList) tPGPObject
 					: (PGPEncryptedDataList) tPGPObjectFactory.nextObject();
 
-			
-			Iterator<PGPPublicKeyEncryptedData> tEncDataItr = tEncDataList.iterator();
-			while (tEncDataItr.hasNext()) {
-				PGPPublicKeyEncryptedData tEncData = tEncDataItr.next();
+			for (PGPEncryptedData tEncDataEl : tEncDataList) {
+				PGPPublicKeyEncryptedData tEncData = (PGPPublicKeyEncryptedData)tEncDataEl;
 				tSecKeyRing = GPGAdapter.getInstance().findSecretKeyRing(tEncData.getKeyID());
 
 				if (tSecKeyRing == null) {
@@ -652,13 +643,13 @@ public class GPGAdapter
 					tMessageObject = pgpFact.nextObject();
 				}
 				if (tMessageObject instanceof PGPLiteralData) {
-					PGPLiteralData tLitteralData = (PGPLiteralData) tMessageObject;
+					PGPLiteralData tLiteralData = (PGPLiteralData) tMessageObject;
 
-					//System.out.println("Orginal File: " + tLitteralData.getFileName() + " ModTime: "
-					//		+ cSDF.format(tLitteralData.getModificationTime()));
+					//System.out.println("Orginal File: " + tLiteralData.getFileName() + " ModTime: "
+					//		+ cSDF.format(tLiteralData.getModificationTime()));
 
-					tOutStream = new FileOutputStream( pOutFile );
-					InputStream tInputStream = tLitteralData.getInputStream();
+					tOutStream = Files.newOutputStream(pOutFile.toPath());
+					InputStream tInputStream = tLiteralData.getInputStream();
 					byte[] tBuffer = new byte[1024];
 					while ((tBytesRead = tInputStream.read(tBuffer, 0, tBuffer.length)) != -1) {
 						tOutStream.write(tBuffer, 0, tBytesRead);

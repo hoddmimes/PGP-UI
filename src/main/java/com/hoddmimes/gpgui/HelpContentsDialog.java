@@ -7,6 +7,8 @@ import java.awt.Insets;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Scanner;
 
 
@@ -83,7 +85,7 @@ public class HelpContentsDialog extends JDialog {
 
 		JButton okButton = new JButton("OK");
 		okButton.setActionCommand("OK");
-		okButton.addActionListener(even->{ this.dispose();});
+		okButton.addActionListener(even-> this.dispose());
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 		
@@ -91,7 +93,7 @@ public class HelpContentsDialog extends JDialog {
 	}
 
 	private String fileToString( File pFile ) throws IOException {
-		String tString = new Scanner(new FileInputStream(pFile), "utf-8").useDelimiter("\\Z").next();
+		String tString = new Scanner(Files.newInputStream(pFile.toPath()), StandardCharsets.UTF_8).useDelimiter("\\Z").next();
 		return tString;
 	}
 
@@ -101,7 +103,7 @@ public class HelpContentsDialog extends JDialog {
 		URL tURL = null;
 
 		try {
-			if (PGPGUI.USE_EXTENTION) {
+			if (PGPGUI.USE_EXTENSION) {
 				tURL = getClass().getClassLoader().getResource("helpext.html");
 				if (tURL == null) {
 					tURL =  getClass().getResource("./resources/helpext.html");
@@ -115,9 +117,6 @@ public class HelpContentsDialog extends JDialog {
 				}
 
 				File tFile = new File("./resources/helpext.html");
-				if (!tFile.exists()) {
-					tFile = new File("./gpgui/resources/helpext.html");
-				}
 				if (tFile.exists()) {
 					pPane.setText(fileToString(tFile));
 					return;
@@ -136,9 +135,6 @@ public class HelpContentsDialog extends JDialog {
 				}
 
 				File tFile = new File("./resources/help.html");
-				if (!tFile.exists()) {
-					tFile = new File("./gpgui/resources/help.html");
-				}
 				if (tFile.exists()) {
 					pPane.setText(fileToString(tFile));
 					return;

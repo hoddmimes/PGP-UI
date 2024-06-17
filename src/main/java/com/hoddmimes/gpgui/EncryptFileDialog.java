@@ -155,7 +155,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		c.gridx = 2;
 		c.gridy = tRow;
 		mContentPanel.add(tInBrowseBtn, c);
-		tInBrowseBtn.addActionListener(event->{ browseInFiles(); });
+		tInBrowseBtn.addActionListener(event-> browseInFiles());
 		
 		
 		
@@ -188,7 +188,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		c.gridx = 2;
 		c.gridy = tRow;
 		mContentPanel.add(tOutBrowseBtn, c);
-		tOutBrowseBtn.addActionListener(event->{ browseOutFiles(); });
+		tOutBrowseBtn.addActionListener(event-> browseOutFiles());
 		
 		
 		/**
@@ -201,7 +201,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		
 		mArmorChkBox = new JCheckBox("Armored Wrapper");
 		tParameterPanel.add(mArmorChkBox);
-		mArmorChkBox.addActionListener( event -> { updateOutFile(); });
+		mArmorChkBox.addActionListener( event -> updateOutFile());
 		
 		JPanel tPanel = new JPanel( new FlowLayout( FlowLayout.LEFT));
 		tPanel.add(mArmorChkBox);
@@ -230,7 +230,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		tParameterPanel.add(tSignUserLabel, c);
 		
 		
-		mSignComboBox = new JComboBox<SigningUser>( getSignUsers() );	
+		mSignComboBox = new JComboBox<>(getSignUsers());
 		mSignComboBox.addActionListener(this);
 		mSignComboBox.setPreferredSize(new Dimension(550, 23));
 		c = new GridBagConstraints();
@@ -247,7 +247,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		c.gridy = 1;
 		tParameterPanel.add(new JLabel("Encrypt Algo"), c);
 		
-		mEncryptAlgoComboBox = new JComboBox<String>( mEncryptAlgos );	
+		mEncryptAlgoComboBox = new JComboBox<>(mEncryptAlgos);
 		mEncryptAlgoComboBox.addActionListener(this);
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.WEST;
@@ -259,10 +259,10 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 		mAESKeyStrengthPanel = new JPanel( new FlowLayout());
 		mAESKeyStrengthPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
 		mAESKeyStrengthPanel.add( new JLabel("AES Encryption"));
-		mAESStrengthComboBox = new JComboBox<String>( mAESKeyStrength );	
+		mAESStrengthComboBox = new JComboBox<>(mAESKeyStrength);
 		mAESKeyStrengthPanel.add( mAESStrengthComboBox );
 		mAESKeyStrengthPanel.add( new JLabel("bits"));
-		if (PGPGUI.USE_EXTENTION) {
+		if (PGPGUI.USE_EXTENSION) {
 			c = new GridBagConstraints();
 			c.anchor = GridBagConstraints.WEST;
 			c.insets = new Insets(0, 10, 0, 0);
@@ -307,14 +307,14 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 				mEncryptBtn.setActionCommand("ENCRYPT");
 				buttonPane.add(mEncryptBtn);
 				getRootPane().setDefaultButton(mEncryptBtn);
-				mEncryptBtn.addActionListener(event-> { encryptFile(); } );
+				mEncryptBtn.addActionListener(event-> encryptFile());
 				mEncryptBtn.setEnabled(false);
 			}
 			{
 				JButton tCancelButton = new JButton("Cancel");
 				tCancelButton.setActionCommand("Cancel");
 				buttonPane.add(tCancelButton);
-				tCancelButton.addActionListener( event-> { this.dispose(); });
+				tCancelButton.addActionListener( event-> this.dispose());
 			}
 		}
 	}
@@ -376,7 +376,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 			}
 	    	
 	    	
-			AlertMessage.showMessage(this, "Succefully encrypted \"" + mInFilenameTextFile.getText() + "\" (" + tProcessingTime + " sec)");
+			AlertMessage.showMessage(this, "Successfully encrypted \"" + mInFilenameTextFile.getText() + "\" (" + tProcessingTime + " sec)");
 			this.dispose();
 			return;
 	    }
@@ -441,11 +441,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		if (e.getType() == e.UPDATE) {
-			if (mKeyContainer.anyUserSelected()) {
-				mEncryptBtn.setEnabled(true);
-			} else {
-				mEncryptBtn.setEnabled(false);
-			}
+            mEncryptBtn.setEnabled(mKeyContainer.anyUserSelected());
 		}
 	}
 
@@ -530,11 +526,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == mEncryptAlgoComboBox) {
 			String tAlgo = (String) mEncryptAlgoComboBox.getSelectedItem();
-			if (tAlgo.compareTo("AES") != 0) {
-				mAESStrengthComboBox.setEnabled(false);
-			} else {
-				mAESStrengthComboBox.setEnabled(true);
-			}
+            mAESStrengthComboBox.setEnabled("AES".equals(tAlgo));
 		}
 		
 	}

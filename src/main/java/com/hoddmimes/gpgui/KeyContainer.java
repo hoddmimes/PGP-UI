@@ -4,9 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -36,7 +36,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 	private final String POPUP_DELETE_KEY = "Delete Key";
 	
 	
-	private final boolean		mEnableUserSeletions;
+	private final boolean		mEnableUserSelections;
 	private final JTable 		mTable;
 	private final KeyTableModel mTableModel;
 
@@ -50,7 +50,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 
 	public KeyContainer(KeyType pKeyType, int pWidth, int pHeight, boolean pUserIdFilter, boolean pEnableUserSeletions ) {
 		this.mKeyType = pKeyType;
-		this.mEnableUserSeletions = pEnableUserSeletions;
+		this.mEnableUserSelections = pEnableUserSeletions;
 		this.mPrefViewSize = new Dimension(pWidth, pHeight);
 		this.setLayout(new BorderLayout());
 		
@@ -67,7 +67,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 		mTable = new JTable();
 		mTableModel = new KeyTableModel(pEnableUserSeletions);
 		
-		mTableModelListener = new ArrayList<TableModelListener>();
+		mTableModelListener = new ArrayList<>();
 	
 		setupFilterPanel(pUserIdFilter);
 		setupKeyTable();
@@ -104,7 +104,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 			// Add apply button 
 			JButton tFilterApplyBtn = new JButton("Apply");
 			tFilterApplyBtn.setPreferredSize(new Dimension(65, 20));
-			tFilterApplyBtn.addActionListener( event-> { applyFilter(); });
+			tFilterApplyBtn.addActionListener( event-> applyFilter());
 			tUserIdFilterPanel.add(tFilterApplyBtn);
 			
 			GridBagConstraints  c  = new GridBagConstraints();
@@ -142,7 +142,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 		mTable.setModel(mTableModel);
 		mTableModel.initiateColumnData( mTable.getColumnModel() );
 		mTable.getModel().addTableModelListener(this);
-		mTable.setFont(new java.awt.Font("Calibri",0,14));
+		mTable.setFont(new java.awt.Font("Calibri", Font.PLAIN,14));
 		mTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		mTable.setSelectionBackground(new Color( 242,242,242 ));
 		mTable.setSelectionForeground(Color.BLUE);
@@ -191,7 +191,6 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 	
 	@Override
 	public void tableChanged(TableModelEvent e) {
-		
 		if (e.getType() == e.UPDATE) {
 			//System.out.println("Table Update (row selected: " + mTableModel.getSelectedRow() + " )");
 			fixSelectionRow(e.getFirstRow() );
@@ -224,7 +223,7 @@ public class KeyContainer extends JPanel implements TableModelListener, MouseLis
 //		    System.out.println("double clicked row: " + tRow + " col: " + tCol);
 //		    System.out.println( e.toString() );
 		    
-		    if ((!mEnableUserSeletions) || (tCol > 0)) {
+		    if ((!mEnableUserSelections) || (tCol > 0)) {
 		      mPopupMenu.setSelectedKeyRing( mTableModel.getKeyAtRow(tRow));
 		      mPopupMenu.show(this, e.getX(), e.getY());
 		    }

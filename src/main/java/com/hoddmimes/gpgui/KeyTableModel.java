@@ -21,7 +21,7 @@ import org.bouncycastle.openpgp.PGPPublicKey;
 
 
 
-public class KeyTableModel extends AbstractTableModel 
+public class KeyTableModel extends AbstractTableModel
 {
 
 	private final int COL_SELECTED = 0;
@@ -32,7 +32,7 @@ public class KeyTableModel extends AbstractTableModel
 	private final int COL_KEY_RING = 5;
 	
 	
-	private  ColumnData mColumnData[] = null;
+	private ColumnData[] mColumnData = null;
 	
 	
 	ArrayList<KeyRingInterface>	mActiveUserKeyRings;
@@ -40,19 +40,19 @@ public class KeyTableModel extends AbstractTableModel
 	JTable						mTable;
 	KeyRenderer 				mKeyRenderer;
 	KeyHeaderRender 			mKeyHeaderRender;
-	boolean						mEnableUserSeletions;
+	boolean                     mEnableUserSelections;
 		
-	KeyTableModel(boolean pEnableUserSeletions) {
-		mActiveUserKeyRings = new ArrayList<KeyRingInterface>();
-		mUserKeyRings = new ArrayList<KeyRingInterface>();
+	KeyTableModel(boolean pEnableUserSelections) {
+		mActiveUserKeyRings = new ArrayList<>();
+		mUserKeyRings = new ArrayList<>();
 		mKeyRenderer = new KeyRenderer();
 		mKeyHeaderRender = new KeyHeaderRender();
-		mEnableUserSeletions = pEnableUserSeletions;
+		mEnableUserSelections = pEnableUserSelections;
 		setupColumnData();
 	}
 	
 	private void setupColumnData() {
-		if (mEnableUserSeletions) {
+		if (mEnableUserSelections) {
 			mColumnData = new ColumnData[6];
 			mColumnData[0] = new ColumnData("Selected",55, JLabel.CENTER, Boolean.class);
 			mColumnData[1] = new ColumnData("User Id",350, JLabel.LEFT, String.class);
@@ -95,17 +95,14 @@ public class KeyTableModel extends AbstractTableModel
 	
 	@Override
 	public boolean isCellEditable(int pRowIndex, int pColumnIndex) {
-		int tColumnIndex = (mEnableUserSeletions) ? pColumnIndex : (pColumnIndex + 1);
-		if (tColumnIndex == 0) {
-			return true;
-		}
-		return false;
-	}
+		int tColumnIndex = (mEnableUserSelections) ? pColumnIndex : (pColumnIndex + 1);
+        return tColumnIndex == 0;
+    }
 
 	@Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		if (mEnableUserSeletions) {
-			if (((Boolean) aValue) == true) {
+		if (mEnableUserSelections) {
+			if (((Boolean) aValue)) {
 				for(int i = 0; i < mActiveUserKeyRings.size(); i++) {
 					super.setValueAt(false, i, columnIndex); 
 					mActiveUserKeyRings.get(i).setIsSelected(false);
@@ -135,18 +132,18 @@ public class KeyTableModel extends AbstractTableModel
 		}
 		KeyRingInterface tUserKeyRing = mActiveUserKeyRings.get(pRowIndex);
 		
-		int tColumnIndex = (mEnableUserSeletions) ? pColumnIndex : (pColumnIndex + 1);
+		int tColumnIndex = (mEnableUserSelections) ? pColumnIndex : (pColumnIndex + 1);
 		
 		switch( tColumnIndex ) 
 		{
 			case COL_SELECTED:
-				return new Boolean(tUserKeyRing.isSelected());
+				return tUserKeyRing.isSelected();
 			case COL_USER_ID:
 				return tUserKeyRing.getFirstUserId();
 			case COL_KEY_ID:
 				return Integer.toHexString((int)(tUserKeyRing.getMasterKeyId() &0xffffffff));
 			case COL_KEY_SIZE:
-				return toString().valueOf(tUserKeyRing.getBitStrength());
+                return String.valueOf(tUserKeyRing.getBitStrength());
 			case COL_KEY_RING:
 				return tUserKeyRing.getKeyRingRepositoryName();
 			case COL_KEY_ALGO:
