@@ -1,8 +1,7 @@
 group 'com.hoddmimes.pgpgui'
-version '1.0-SNAPSHOT'
+version '1.4'
 
 apply plugin: 'java'
-apply plugin: 'java-library-distribution'
 
 sourceCompatibility = JavaVersion.VERSION_11
 
@@ -14,12 +13,25 @@ configurations {
 }
 
 tasks.jar {
-    Directory projectDirectory = layout.projectDirectory
     exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
 
     manifest.attributes["Main-Class"] = "com.hoddmimes.gpgui.PGPGUI"
-    //manifest.attributes["Class-Path"] = fileTree("lib").filter { it.isFile() }.collect { it.getName() }.join(' ')
+    manifest.attributes["Class-Path"] = fileTree("libs").filter { it.isFile() }.collect { "libs/${it.getName()}" }.join(' ')
 }
+
+task distZip(type: Zip, dependsOn: jar) {
+    archiveFileName = "pgp-ui-${version}.zip"
+    destinationDirectory = layout.buildDirectory.dir('distributions')
+
+    into('pgp-ui') {
+        from tasks.jar.archiveFile
+        from('libs') {
+            into('libs')
+        }
+    }
+}
+
+build.dependsOn distZip
 
 repositories {
     mavenCentral()
