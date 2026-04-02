@@ -2,129 +2,166 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>PGP GUI V1.4</title>
+<title>PGP GUI Help</title>
+<style>
+  body        { font-family: Arial, sans-serif; font-size: 13px; color: #212121; margin: 10px 16px; }
+  h1          { font-size: 18px; color: #1A237E; border-bottom: 2px solid #1A237E; padding-bottom: 4px; }
+  h2          { font-size: 15px; color: #1A237E; margin-top: 18px; margin-bottom: 4px; }
+  h3          { font-size: 13px; color: #283593; margin-top: 12px; margin-bottom: 2px; }
+  p           { margin: 6px 0; line-height: 1.5; }
+  ul          { margin: 4px 0 8px 0; padding-left: 22px; line-height: 1.6; }
+  pre         { background: #F0F1FA; padding: 10px; font-size: 11px; overflow-x: auto; }
+  code        { font-family: monospace; background: #F0F1FA; padding: 1px 4px; }
+  .note       { background: #E8EAF6; border-left: 3px solid #1A237E; padding: 6px 10px; margin: 8px 0; }
+</style>
 </head>
 <body>
-<h1>About PGP GUI</h1>
-GPGUI is a program wrapping the most fundamental PGP functionality provided via the 
-<a href="https://www.bouncycastle.org/about/"> Bouncy Castle</a> API in a GUI.
-Functionality such as create/list/delete/import key, encrypt/decrypt
-message and file is exposed by the program.
+
+<h1>PGP GUI</h1>
 <p>
-The program tries to access and used the key ring files defined by <a href="https://www.gnupg.org">GnuPG</a>.
-Having GnuPG installed is however optional.
-GPGUI i.e this program is maintaining its own public and secret key ring files so GPGUI can operate on its own without having GnuPG installed.
+PGP GUI is a program wrapping the most fundamental PGP functionality provided via the
+<a href="https://www.bouncycastle.org/about/">Bouncy Castle</a> cryptography library in a graphical interface.
+Features include creating, listing, deleting and importing keys, as well as encrypting and decrypting
+messages and files using asymmetric PGP keys or a shared static password.
+</p>
 <p>
+The program can read and use the key ring files managed by <a href="https://www.gnupg.org">GnuPG</a>.
+Having GnuPG installed is however optional — PGP GUI maintains its own public and secret key ring files
+and can operate fully without GnuPG.
+</p>
+
 <h2>List Keys</h2>
-Lists either public or secret keys in GnuPG and/or in PGP GUI key ring files.
-The <i>Key Ring</i> attribute tells what key ring file the key belongs to i.e. GnuPG or PGP GUI.
 <p>
-By double clicking on a key you'll see a menu to expand or delete the key.
- 
+Lists either public or secret keys found in the GnuPG and/or PGP GUI key ring files.
+The <i>Key Ring</i> column indicates which key ring file the key belongs to (GnuPG or PGP GUI).
+</p>
+<p>
+Double-clicking a key opens a menu to expand (view details) or delete the key.
+</p>
+
 <h2>Create Keys</h2>
-Dialog for creating and asymmetric key inclusive an encryption subkey. The algorithms available are RSA or DSA/ELGAM.
-The key can be saved in GnuPG key ring files if being installed or in the PGP GUI own key ring files.
+<p>
+Creates an asymmetric key pair including an encryption subkey. The supported algorithms are
+RSA and DSA/ElGamal. Keys can be saved to the GnuPG key ring files (if GnuPG is installed)
+or to the PGP GUI own key ring files.
+</p>
 
 <h2>Import Key</h2>
-Armored key can be imported to the GnuPG key ring files, if being available or in the PGP GUI key ring files.
-
-<h2>Encrypt Message/File</h2>
-Encrypts a text or a file choosing a receiver public key and an encryption algorithm.
-If selecting any of the added on algorithms (see below) i.e. SnowFlake, AESx2, AESx4 or AESx8 the message can only be 
-decrypted using the PGP GUI program otherwise GnuPG can be used to decrypt the message.
-
-<h2>Decrypt Message/File</h2>
-Encrypts an armored text or a file. Trying to find the secret key for decryption in GnuPG or PGP GUI key ring files.
-
-<h2>Setting</h2>
-The setting dialog allows the locations of the GnuPG and PGP GUI key ring files to be configured.
-In addition it is possible for how long time secret key password should be cached.
-
-<h2>Encrypt/Decrypt Extension</h2>
-Besides the standard encryption GnuPG algorithms PGP GUI adds two additional ones, extended AES and SnowFlake.
-Extended AES allows larger keys sizes to be used and SnowFlake is a proprietary developed algorithm.
 <p>
-<h3>Extend AES</h3>
-GPGUI adds three additional flavors of AES using different key sizes 512, 1024 or 2048 bits. 
-When the larger key sizes than the standard 256 bits, the encryption is serialized from the multiple instances of
-the AES algorithm.If using a key size of 2048 bits, eighth instances are interlinked. Each instance will be initiated with with 
-an eighth of the key i.e. 2048 / 8  = 256. AESx2 use 512 bit, AESx4 use 1024 bits and AESx8 use 2048 bits.
+Imports an ASCII-armored public or secret key into either the GnuPG key ring files
+(if available) or the PGP GUI key ring files.
+</p>
+
+<h2>Encrypt Message</h2>
+<p>
+The Encrypt Message window provides two encryption methods, selectable via tabs:
+</p>
+<ul>
+  <li><b>PGP Encryption</b> — encrypts the message using a recipient's PGP public key and a
+      chosen symmetric algorithm (AES, CAST5, Blowfish, Camellia-256, IDEA or Twofish).
+      Optionally the message can be signed with your own secret key.</li>
+  <li><b>Static Password Encryption</b> — encrypts the message using a shared password,
+      requiring no PGP keys. See <i>Static Password Encryption</i> below.</li>
+</ul>
+<p>
+Right-clicking the text area opens a context menu with <b>Copy to Clipboard</b> and
+<b>Paste from Clipboard</b> options.
+</p>
+
+<h2>Decrypt Message</h2>
+<p>
+Decrypts an encrypted message pasted into the text area. The program automatically detects
+the message type from its header:
+</p>
+<ul>
+  <li>PGP-encrypted messages (<code>-----BEGIN PGP MESSAGE-----</code>) are decrypted using
+      the matching secret key found in the GnuPG or PGP GUI key ring files.</li>
+  <li>Static-password-encrypted messages (<code>-----BEGIN STATIC ENCRYPTED MESSAGE-----</code>)
+      prompt for the password used during encryption.</li>
+</ul>
+<p>
+Right-clicking the text area opens a context menu with <b>Copy to Clipboard</b> and
+<b>Paste from Clipboard</b> options.
+</p>
+
+<h2>Encrypt File</h2>
+<p>
+Encrypts a file using a recipient's PGP public key. The output can optionally be ASCII-armored.
+</p>
+
+<h2>Decrypt File</h2>
+<p>
+Decrypts a PGP-encrypted file using the matching secret key found in the GnuPG or PGP GUI key ring files.
+</p>
+
+<h2>Static Password Encryption</h2>
+<p>
+Static Password Encryption allows messages to be encrypted and decrypted using only a shared
+password, with no PGP keys required. This is useful for communicating with parties who do not
+use PGP.
+</p>
+<p>
+The encrypted output is ASCII-armored for safe copy-paste:
+</p>
+<pre><code>-----BEGIN STATIC ENCRYPTED MESSAGE-----
+... Base64 encoded ciphertext ...
+-----END STATIC ENCRYPTED MESSAGE-----</code></pre>
+<p>
+The technical parameters used are:
+</p>
+<ul>
+  <li><b>Cipher:</b> AES-256 in CBC mode with PKCS5 padding</li>
+  <li><b>Key derivation:</b> PBKDF2-HMAC-SHA256</li>
+  <li><b>Iterations:</b> 65,431</li>
+  <li><b>Salt:</b> MANDELBROTIAN</li>
+  <li><b>IV:</b> Randomly generated 16-byte initialisation vector, unique per encryption</li>
+</ul>
+<div class="note">
+The same password must be used for both encryption and decryption. There is no way to recover
+a message if the password is lost.
+</div>
+
+<h2>Settings</h2>
+<p>
+The Settings dialog allows the file paths of the GnuPG and PGP GUI key ring files to be
+configured. It also controls how long a secret key password is cached after first use,
+avoiding repeated password prompts within a session.
+</p>
+
+<h2>Encryption Extensions</h2>
+<p>
+When started with the <code>-enable_extension true</code> flag, PGP GUI exposes two additional
+proprietary encryption algorithms: Extended AES and SnowFlake. Messages encrypted with these
+algorithms can only be decrypted using PGP GUI — they are not compatible with GnuPG.
+</p>
+
+<h3>Extended AES</h3>
+<p>
+PGP GUI adds three additional AES key sizes beyond the standard 256 bits: 512, 1024 and 2048 bits.
+The larger key sizes are achieved by serialising multiple instances of the standard AES-256 algorithm,
+each initialised with a 256-bit slice of the full key:
+</p>
+<ul>
+  <li><b>AESx2</b> — 512-bit key, two chained AES-256 instances</li>
+  <li><b>AESx4</b> — 1024-bit key, four chained AES-256 instances</li>
+  <li><b>AESx8</b> — 2048-bit key, eight chained AES-256 instances</li>
+</ul>
 
 <h3>SnowFlake</h3>
-SnowFlake is proprietary experimental algorithm. It uses a 1024 bits key.
-The algorithm is a substitute algorithm using a 16x16x16 int table for substitution.
-The substitution table is constructed dynamically and randomly using the key as seed.
-The key is rotated randomly 0-64 bits after each substitution, depending on the data used in the substitution table.
-The word used for substitution is updated (xor) with a random word after being used.
-An input word is substituted by being xor with the selected word in the substitution table and the lowest 4 bytes
-in the key for the time being.
 <p>
-The <i>SnowFlake</i> code can be found below.
-
-<pre><code>
-
-
-
-import org.bouncycastle.crypto.BlockCipher;
-import org.bouncycastle.crypto.CipherParameters;
-import org.bouncycastle.crypto.params.KeyParameter;
-
-import com.hoddmimes.pgpgui.SecureRandomSHA256;
-
-/**
- * This is a simple substitution encryption algorithm (written just for fun). The algorithm use a 1024 bit key.
- * The input is being XOR with a substitution (32 bit) word random selected  and the 4 lowest bytes in the key for the time being.
- * The substitution word randomly selected is depending on the lowest byte in the key for the time being.
- * The key is rotated randomly 0-64 bits after each substitution, depending on the substitution word being used.
- * The word selected in the substitution table is updated (xor) after each substitution with a random word.
- *
- * @author bertilsson
- *
- */
-public class SnowFlakeEngine implements BlockCipher {
-
-	private static int ROUNDS = 16;
-	private static int BOX_SIZE = 16;
-	private static int BLOCK_SIZE = 16;
-	private byte[] mInKey;             //1024 bites 128 bytes
-	private byte[] mWorkingKey;
-	private boolean mForEncryption;
-	private SecureRandomSHA256 mRandom;
-
-	private int[][][] mBoxes; // substitution box
-
-
-
-	public SnowFlakeEngine() {
-		mWorkingKey = new byte[128];  // allocate space for  working key
-		mInKey = new byte[128]; // Allocate space for encryption / decryption key
-	}
-
-
-
-
-	@Override
-	public void init(boolean pForEncryption, CipherParameters pCipherParam) throws IllegalArgumentException {
-		KeyParameter tKeyParam = (KeyParameter) pCipherParam;
-		mInKey = tKeyParam.getKey();
-		mForEncryption = pForEncryption;
-
-		if (mInKey.length != 128) { // 1024 bits
-			throw new IllegalArgumentException("Invalid key length, must be 1024 bits (" + String.valueOf((mWorkingKey.length * 8)) + ")");
-		}
-
-		reset();
-	}
-
-
-
-
-	private void transform( byte[] pSrc, int pSrcOffset,  byte[] pDst, int pDstOffet) {
-		int tXorKey =17;
-
-		for (int i = 0; i </code></pre>
-
-
+SnowFlake is an experimental proprietary substitution cipher using a 1024-bit key.
+A 16×16×16 integer substitution table is constructed dynamically and randomly at initialisation
+time using the key as a seed. For each input word:
+</p>
+<ul>
+  <li>The word is XOR'd with a substitution word selected from the table and the lowest 4 bytes of the current key position.</li>
+  <li>The key is then rotated by a random amount (0–64 bits) determined by the substitution word just used.</li>
+  <li>The substitution word that was used is updated (XOR'd) with a new random word.</li>
+</ul>
+<div class="note">
+SnowFlake is an experimental algorithm written for educational purposes. It has not undergone
+formal cryptographic review and should not be relied upon for sensitive communications.
+</div>
 
 </body>
 </html>

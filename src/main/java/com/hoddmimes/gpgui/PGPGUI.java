@@ -14,9 +14,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 
 
 
@@ -64,17 +65,17 @@ public class PGPGUI implements ActionListener {
 			parseArguments( pArgs );
 			EventQueue.invokeLater(() -> {
                 try {
-                    boolean tIsWindows = isWindows();
-                    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                        //System.out.println("UI Manager: " + info.getName());
-                        if ((tIsWindows) &&("Windows".equals(info.getName()))) {
-                            UIManager.setLookAndFeel(info.getClassName());
-                            break;
-                        } else if ((!tIsWindows) && ("Nimbus".equals(info.getName()))) {
-                            UIManager.setLookAndFeel(info.getClassName());
-                            break;
-                        }
-                    }
+                    // Deep Navy accent — drives tab underlines, focus rings, selection, scrollbar hover
+                    FlatLaf.setGlobalExtraDefaults(java.util.Collections.singletonMap("@accentColor", "#1A237E"));
+                    FlatLightLaf.setup();
+                    UIManager.put("Button.arc",          8);
+                    UIManager.put("Component.arc",       6);
+                    UIManager.put("TextComponent.arc",   5);
+                    UIManager.put("ScrollBar.thumbArc",  999);
+                    UIManager.put("ScrollBar.width",     10);
+                    UIManager.put("Panel.background",              new java.awt.Color(0xF0F1FA));
+                    UIManager.put("TabbedPane.selectedBackground", new java.awt.Color(0xD9DCF0));
+                    UIManager.put("TabbedPane.hoverColor",         new java.awt.Color(0xBFC4E8));
                     PGPGUI mgpgui = new PGPGUI();
                     mgpgui.mFrame.setVisible(true);
                 } catch (Exception e) {
