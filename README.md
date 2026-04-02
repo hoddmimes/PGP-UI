@@ -15,7 +15,8 @@ PGP key handling can be a bit cumbersome, therefore static password encrypt/decr
 * Decrypt
 * PGP signing
 * Key management
-* In addition there is also static password encryption/decryption
+* In addition there is also static password encryption/decryption fo the ones that does not have the patiance 
+  to deal with PGP keys
 
 See [About Page](./src/main/resources/help.html) for details.
 

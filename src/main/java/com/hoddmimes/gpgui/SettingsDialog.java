@@ -132,9 +132,9 @@ public class SettingsDialog extends JDialog {
 			return;
 		}
 		tSettings.setPGPPublicKeyRingFilename(mPGPPubFileName.getFilename());
-		tSettings.setPGPSecretKeyRingFilename(mPGPPubFileName.getFilename());
-		tSettings.setPGPPublicKeyRingFilename(mPGPPubFileName.getFilename());
-		tSettings.setPGPUISecretKeyRingFilename(mPGPPubFileName.getFilename());
+		tSettings.setPGPSecretKeyRingFilename(mPGPSecFileName.getFilename());
+		tSettings.setPGPUIPublicKeyRingFilename(mPGPUIPubFileName.getFilename());
+		tSettings.setPGPUISecretKeyRingFilename(mPGPUISecFileName.getFilename());
 		
 		tSettings.save();
 	}

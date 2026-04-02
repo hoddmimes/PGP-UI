@@ -27,7 +27,6 @@ public class Settings
 	private String  mLinuxGPGUIPublicKeyRingFile = System.getProperty("user.home") + "/.gpgui-pubring.kr";
 	private  String mLinuxGPGUISecretKeyRingFile = System.getProperty("user.home") + "/.gpgui-secring.kr";
 	
-	private long mPasswordCacheLiveTime = Long.MAX_VALUE;
 	private String mCurrentDir = System.getProperty("user.home");
 	private Map<Long,CachePasswordEntry> mPasswordCache;
 	
@@ -82,7 +81,7 @@ public class Settings
 		if (tEntry == null) {
 			return null;
 		}
-		if ((tEntry.getCreateTime() + mPasswordCacheLiveTime) < System.currentTimeMillis()) {
+		if ((tEntry.getCreateTime() + (long) mPasswordTTL * 60 * 1000L) < System.currentTimeMillis()) {
 			mPasswordCache.remove(pKeyId);
 			return null;
 		}
@@ -173,50 +172,43 @@ public class Settings
 	
 	
 	void restore() {
-		FileInputStream tIn;
-		try {
-			tIn = new FileInputStream("pgpui.properties");
+		try (FileInputStream tIn = new FileInputStream("pgpui.properties")) {
 			Properties tProp = new Properties();
 			tProp.load(tIn);
 			mWinGPGPublicKeyRingFile =  tProp.getProperty("pgp.win.public.filename");
 			mWinGPGSecretKeyRingFile =  tProp.getProperty("pgp.win.secret.filename");
 			mWinGPGUIPublicKeyRingFile =  tProp.getProperty("pgpui.win.public.filename");
 			mWinGPGUISecretKeyRingFile =  tProp.getProperty("pgpui.win.secret.filename");
-			
-			
+
+
 			mLinuxGPGPublicKeyRingFile =  tProp.getProperty("pgp.linux.public.filename");
 			mLinuxGPGSecretKeyRingFile =  tProp.getProperty("pgp.linux.secret.filename");
 			mLinuxGPGUIPublicKeyRingFile =  tProp.getProperty("pgpui.linux.public.filename");
 			mLinuxGPGUISecretKeyRingFile =  tProp.getProperty("pgpui.linux.secret.filename");
-			
+
 			mPasswordTTL = Integer.parseInt( tProp.getProperty("passwordttl"));
 			mCurrentDir = tProp.getProperty("currdir");
 		}
 		catch( IOException e ) {
-			
+
 		}
 	}
 	void save() {
-		FileOutputStream tOut;
-		
-		try {
-			tOut = new FileOutputStream("pgpui.properties");
+		try (FileOutputStream tOut = new FileOutputStream("pgpui.properties")) {
 			 Properties tProp = new Properties();
 			 tProp.setProperty("pgp.win.public.filename", mWinGPGPublicKeyRingFile);
 			 tProp.setProperty("pgp.win.secret.filename", mWinGPGSecretKeyRingFile);
-			 tProp.setProperty("pgp.Linux.public.filename", mLinuxGPGPublicKeyRingFile);
-			 tProp.setProperty("pgp.Linux.secret.filename", mLinuxGPGSecretKeyRingFile);
-			 
+			 tProp.setProperty("pgp.linux.public.filename", mLinuxGPGPublicKeyRingFile);
+			 tProp.setProperty("pgp.linux.secret.filename", mLinuxGPGSecretKeyRingFile);
+
 			 tProp.setProperty("pgpui.win.public.filename", mWinGPGUIPublicKeyRingFile);
 			 tProp.setProperty("pgpui.win.secret.filename", mWinGPGUISecretKeyRingFile);
-			 tProp.setProperty("pgpui.Linux.public.filename", mLinuxGPGUIPublicKeyRingFile);
-			 tProp.setProperty("pgpui.Linux.secret.filename", mLinuxGPGUISecretKeyRingFile);
-			 
+			 tProp.setProperty("pgpui.linux.public.filename", mLinuxGPGUIPublicKeyRingFile);
+			 tProp.setProperty("pgpui.linux.secret.filename", mLinuxGPGUISecretKeyRingFile);
+
 			 tProp.setProperty("passwordttl", String.valueOf(mPasswordTTL));
 			 tProp.setProperty("currdir", mCurrentDir);
 			 tProp.store(tOut, null);
-			 tOut.flush();
-			 tOut.close();
 		}
 		catch( IOException e) {
 			e.printStackTrace();

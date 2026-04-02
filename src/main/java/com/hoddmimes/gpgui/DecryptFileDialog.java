@@ -262,7 +262,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 		Iterator<byte[]> tUsrIdItr = pSeckey.getPublicKey().getRawUserIDs();
 		String tUserId = "<unknown>";
 		if (tUsrIdItr.hasNext()) {
-			try {tUserId = new String( tUserId.getBytes(), StandardCharsets.UTF_8);}
+			try {tUserId = new String( tUsrIdItr.next(), StandardCharsets.UTF_8);}
 			catch( Exception e) {
 				e.printStackTrace();
 			}
@@ -376,7 +376,7 @@ public class DecryptFileDialog extends JDialog implements GPGAdapter.DecryptInte
 	@Override
 	public void decryptedMessage(byte[] pMessageBytes) {
 		// Should never be called
-		throw new RuntimeCryptoException("Inavlid callback in DecryptFileDialog");
+		throw new RuntimeCryptoException("Invalid callback in DecryptFileDialog");
 	}
 
 	@Override

@@ -425,10 +425,10 @@ public class GPGAdapter
 		 Iterator<byte[]> tUsrIdItr = pSeckey.getPublicKey().getRawUserIDs();
 		 String tUserId = "<unknown>";
 		 if (tUsrIdItr.hasNext()) {
-			 try {tUserId = new String( tUserId.getBytes(), StandardCharsets.UTF_8);}
+			 try {tUserId = new String( tUsrIdItr.next(), StandardCharsets.UTF_8);}
 			 catch( Exception e) {
 				 e.printStackTrace();
-			 }	
+			 }
 		 }
 		 return tUserId;
 	 }
@@ -476,9 +476,7 @@ public class GPGAdapter
 			 }
 			 	 
 			 char[] tPassword = Settings.getInstance().getPasswordForKeyId(tEncData.getKeyID());
-				
-			 tPassword = Settings.getInstance().getPasswordForKeyId(tEncData.getKeyID());
-				 
+
 			 if (tPassword == null) {
 				 tPassword = pDecryptInterface.getPasswordForDecrypt(tEncData.getKeyID(), tSecKeyRing.getSecretKeyUserId());
 			 }	 
@@ -619,8 +617,6 @@ public class GPGAdapter
 				}
 
 				char[] tPassword = Settings.getInstance().getPasswordForKeyId(tEncData.getKeyID());
-
-				tPassword = Settings.getInstance().getPasswordForKeyId(tEncData.getKeyID());
 
 				if (tPassword == null) {
 					tPassword = pDecryptInterface.getPasswordForDecrypt(tEncData.getKeyID(),tSecKeyRing.getSecretKeyUserId());

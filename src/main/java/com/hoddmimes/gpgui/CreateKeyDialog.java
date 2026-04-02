@@ -463,8 +463,8 @@ public class CreateKeyDialog extends JDialog implements ActionListener {
 		    // Finally, create the keyring itself. The constructor
 		    // takes parameters that allow it to generate the self
 		    // signature.
-			PGPKeyRingGenerator tKeyRingGenerator = new PGPKeyRingGenerator(PGPSignature.POSITIVE_CERTIFICATION, pSignKey, pMailAddress, sha1Calc, signhashgen.generate(), null,
-	         new BcPGPContentSignerBuilder(pSignKey.getPublicKey().getAlgorithm(), HashAlgorithmTags.SHA1), pske);
+			PGPKeyRingGenerator tKeyRingGenerator = new PGPKeyRingGenerator(PGPSignature.POSITIVE_CERTIFICATION, pSignKey, pMailAddress, sha256Calc, signhashgen.generate(), null,
+	         new BcPGPContentSignerBuilder(pSignKey.getPublicKey().getAlgorithm(), HashAlgorithmTags.SHA256), pske);
 
 			// Add our encryption subkey, together with its signature.
 			tKeyRingGenerator.addSubKey(pEncKey, enchashgen.generate(), null);

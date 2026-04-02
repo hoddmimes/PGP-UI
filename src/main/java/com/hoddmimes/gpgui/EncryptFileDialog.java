@@ -331,7 +331,7 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 			return tArr;
 		}
 		catch( Exception e ) {
-			AlertMessage.showMessage(this, "Failed to retreive secret keys: " + e.getMessage());
+			AlertMessage.showMessage(this, "Failed to retrieve secret keys: " + e.getMessage());
 			SigningUser[] tArr = new SigningUser[1];
 			tArr[0] = new SigningUser(null);
 			return tArr;
@@ -488,13 +488,13 @@ public class EncryptFileDialog extends JDialog implements TableModelListener, Ac
 	    	if (pSrcDestType == SrcDestType.Source) {
 	    		if (mArmorChkBox.isSelected()) {
 	    			if (pFilename.endsWith(".pgp")) {
-	    				return pFilename.substring(0, pFilename.length() - ".pgp".length() - 1) + ".asc";
+	    				return pFilename.substring(0, pFilename.length() - ".pgp".length()) + ".asc";
 	    			} else {
 	    				return pFilename + ".asc";
 	    			}
 	    		} else {
 	    			if (pFilename.endsWith(".asc")) {
-	    				return pFilename.substring(0, pFilename.length() - ".asc".length() - 1) + ".pgp";
+	    				return pFilename.substring(0, pFilename.length() - ".asc".length()) + ".pgp";
 	    			} else {
 	    				return pFilename + ".pgp";
 	    			}
