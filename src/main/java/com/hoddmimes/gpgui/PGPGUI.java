@@ -122,7 +122,7 @@ public class PGPGUI implements ActionListener {
 		mFrame = new JFrame();
 		mFrame.setBounds(100, 100, 650, 80);
 		mFrame.setResizable(false);
-		mFrame.setTitle("PGPGUI V1.4");
+		mFrame.setTitle("PGPGUI V1.5");
 		GPGAdapter.setAppIcon( this, mFrame );
 		mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
