@@ -27,7 +27,7 @@ You can start the app with the bash script run`run-pgpui.sh`
 Execute `mvn package` and the resulted app jar will be built in the `/target/` folder.
 You can start it with:
 
-    java -jar target/pgpgui-1.1-SNAPSHOT-jar-with-dependencies.jar
+    java -jar target/pgpgui-1.5-SNAPSHOT-jar-with-dependencies.jar
 
 
 ## Distribution
