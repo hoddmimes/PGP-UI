@@ -2,7 +2,7 @@
 
 GUI wrapping the PGP function provided by Legion of the Bouncy Castle
 
-The program allows you to encrypt/sign/decrypt text messages and files using asymmetric PGP keys.
+The program allows you to encrypt/sign/decrypt text messages and files using asymmetric PGP keys ans static passwords.
 
 The program can read and manage GnuPG keys if GnuPG is installed.
 But the program also maintains its own secret and public key files and having GnuPG installed is optional.
@@ -22,6 +22,7 @@ See [About Page](./src/main/resources/help.html) for details.
 
 ## Build
 Execute `gradle build` and the resulted app jar will be built in the `/build/libs/` folder.
+And distributionzip and tar files are found in the build/distribution directory
 You can start the app with the bash script `run-pgpui.sh`.
 
 ## Distribution
