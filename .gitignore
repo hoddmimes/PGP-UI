@@ -1,4 +1,3 @@
-target
 .idea
 
 # Compiled class file
@@ -19,6 +18,9 @@ target
 
 # Build directory
 build/
+
+# Generated start script (legacy location at project root)
+/pgpui.sh
 
 
 

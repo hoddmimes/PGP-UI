@@ -1,47 +1,113 @@
 group 'com.hoddmimes.pgpgui'
-version '1.0'
+version '1.55'
 
 apply plugin: 'java'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
+configurations {
+    distribute {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
 
+task copyLibs(type: Copy) {
+    from configurations.distribute
+    into 'libs'
+}
 
+compileJava.dependsOn copyLibs
+
+def generatedVersionDir = layout.buildDirectory.dir('generated/sources/version/java/main')
+
+task generateVersionSource {
+    inputs.property('version', project.version)
+    outputs.dir generatedVersionDir
+    doLast {
+        def pkgDir = generatedVersionDir.get().dir('com/hoddmimes/pgpgui').asFile
+        pkgDir.mkdirs()
+        new File(pkgDir, 'PGPGUIVersion.java').text = """\
+package com.hoddmimes.pgpgui;
+
+public final class PGPGUIVersion {
+    public static final String VERSION = "${project.version}";
+    private PGPGUIVersion() {}
+}
+"""
+    }
+}
+
+sourceSets.main.java.srcDir generatedVersionDir
+compileJava.dependsOn generateVersionSource
 
 tasks.jar {
     exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.MF'
 
-    manifest.attributes["Main-Class"] = "com.hoddmimes.gpgui.PGPGUI"
-    manifest.attributes["Class-Path"] = fileTree("lib").filter { it.isFile() }.collect { it.getName() }.join(' ')
+    manifest.attributes["Main-Class"] = "com.hoddmimes.pgpgui.PGPGUI"
+    manifest.attributes["Class-Path"] = fileTree("libs").filter { it.isFile() }.collect { "libs/${it.getName()}" }.join(' ')
 }
 
-task distZip(type: Zip, dependsOn: jar) {
-    archiveFileName = "pgp-ui-${version}.zip"
-    destinationDirectory = layout.buildDirectory.dir('dist')
+def generatedScriptFile = layout.buildDirectory.file('scripts/pgpui.sh')
 
-    into('pgp-ui') {
-        from(tasks.jar.archiveFile)
-        from(fileTree('lib').include('*.jar'))
+task createStartScript {
+    inputs.property('version', project.version)
+    outputs.file generatedScriptFile
+    doLast {
+        def tScript = generatedScriptFile.get().asFile
+        tScript.parentFile.mkdirs()
+        tScript.text = "#!/bin/bash\njava  -jar \"pgp-ui-${version}.jar\"\n"
+        tScript.setExecutable(true)
     }
 }
 
-build.dependsOn distZip
+task distZip(type: Zip, dependsOn: [jar, createStartScript]) {
+    archiveFileName = "pgp-ui-${version}.zip"
+    destinationDirectory = layout.buildDirectory.dir('distributions')
+
+    into('pgp-ui') {
+        from tasks.jar.archiveFile
+        from(generatedScriptFile)
+        from('libs') {
+            into('libs')
+        }
+    }
+}
+
+task distTar(type: Tar, dependsOn: [jar, createStartScript]) {
+    archiveFileName = "pgp-ui-${version}.tar.gz"
+    compression = Compression.GZIP
+    destinationDirectory = layout.buildDirectory.dir('distributions')
+
+    into('pgp-ui') {
+        from tasks.jar.archiveFile
+        from(generatedScriptFile)
+        from('libs') {
+            into('libs')
+        }
+    }
+}
+
+build.dependsOn distZip, distTar
+
 
 repositories {
     mavenCentral()
 }
 
-
 dependencies {
-    implementation group: 'org.bouncycastle', name: 'bcprov-jdk18on', version: '1.78.1'
-    implementation group: 'org.bouncycastle', name: 'bcpg-jdk18on', version: '1.78.1'
+    compileOnly group: 'org.bouncycastle', name: 'bcprov-jdk18on', version: '1.84'
+    compileOnly group: 'org.bouncycastle', name: 'bcpg-jdk18on', version: '1.84'
+    distribute  group: 'org.bouncycastle', name: 'bcprov-jdk18on', version: '1.84'
+    distribute  group: 'org.bouncycastle', name: 'bcpg-jdk18on', version: '1.84'
+    distribute 'com.formdev:flatlaf:3.4.1'
+    compileOnly 'com.formdev:flatlaf:3.4.1'
 
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-
 }
 
 test {
